@@ -8,10 +8,6 @@ public class Room {
     private String[] items;
     private Direction[] directions;
 
-    public Room(){
-
-    }
-
     public String getName(){
         return name;
     }
@@ -35,5 +31,59 @@ public class Room {
     }
     public void setDirections(Direction[] directions){
         this.directions = directions;
+    }
+
+    /**
+     *  a method return the next room the user want to go
+     * @param direction the direction the user chose
+     * @return name of the next room from the input direction, else null
+     */
+    public String getNextRoomName(String direction){
+        if (direction.equalsIgnoreCase("quit")
+            || direction.equalsIgnoreCase("exit")){
+            System.exit(0);
+        }
+        Direction[] directions = this.getDirections();
+        for (Direction validDirection : directions){
+            if (direction.equalsIgnoreCase(validDirection.getDirectionName())){
+                return validDirection.getRoom();
+            }
+        }
+        return null;
+    }
+    /**
+     * a method that prints all the items in the room, print "nothing" if the items
+     */
+    public void printItemsInRoom(){
+        StringBuilder currentItems = new StringBuilder();
+        if (items.length == 0){
+            currentItems.append("nothing");
+        } else {
+            for (int i = 0; i < items.length; i++){
+                if (i == 0){
+                    currentItems.append(items[i]);
+                }else {
+                    currentItems.append(", " + items[i]);
+                }
+            }
+        }
+        System.out.println("This room contains " + currentItems);
+    }
+    /**
+     * a method print all directions from the room
+     */
+    public void printDirectionFromRoom(){
+        StringBuilder directionNames = new StringBuilder();
+        for (int i = 0; i < directions.length; i++){
+            String directionName = directions[i].getDirectionName();
+            if (i == 0){
+                directionNames.append(directionName);
+            }else if (i == directions.length - 1){
+                directionNames.append(", or " + directionName);
+            }else{
+                directionNames.append(", " + directionName);
+            }
+        }
+        System.out.println("From here, you can go: " + directionNames);
     }
 }

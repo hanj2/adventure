@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 
-public class loadFromURL {
+public class LoadFromURL {
     /**
      * load the text of the source code from the url web page by a url string input
      * @param urlString the string of the url input
@@ -28,7 +28,7 @@ public class loadFromURL {
      * @param inputJson input Json string
      * @return the layout of the game
      */
-    public static Layout loadFromJson(String inputJson){
+    public static Layout getLayoutFromJson(String inputJson){
         Gson gson  = new Gson();
         Layout layoutOfGame = gson.fromJson(inputJson, Layout.class);
         return layoutOfGame;
