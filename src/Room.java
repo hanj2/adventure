@@ -53,7 +53,6 @@ public class Room {
         }
         return null;
     }
-
     /**
      * a method to get a currently uncarried items in the room
      * @param carriedItems currently carried item array list
@@ -79,7 +78,6 @@ public class Room {
         }
         return restItems;
     }
-
     /**
      * a method to print the rest of the items in the room
      * @param carriedItems items carried by the player

@@ -84,7 +84,8 @@ public class Layout{
      * @throws InterruptedException
      */
     public void printCurrentDescription(String currentRoomName) throws InterruptedException {
-        printVerbatim(currentRoomName);
+        Room current  = getRoomByName(currentRoomName);
+        printVerbatim(current.getDescription());
         if (currentRoomName.equals(startingRoom)){
             System.out.println("Your journey begins here");
         }
