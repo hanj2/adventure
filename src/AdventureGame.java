@@ -67,7 +67,18 @@ public class AdventureGame {
         Room current = layout.getRoomByName(currentRoomName);
         boolean canCarry = false;
         ArrayList<String> restItems = current.restItems(currentCarriedItems);
-        currentCarriedItems.add(itemInput);
+        if ( !restItems.isEmpty()){
+            for (String restItem : restItems){
+                if (restItem.equalsIgnoreCase(itemInput)){
+                    canCarry = true;
+                }
+            }
+        }
+        if (canCarry) {
+            currentCarriedItems.add(itemInput);
+        } else {
+            System.out.println("I can take " + itemInput);
+        }
     }
     /**
      * method to drop an item
