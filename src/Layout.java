@@ -91,8 +91,6 @@ public class Layout{
         if (currentRoomName.equals(endingRoom)){
             System.out.println("You have reached your final destination");
         }
-        Room currentRoom = getRoomByName(currentRoomName);
-        currentRoom.printItemsInRoom();
     }
 
 }

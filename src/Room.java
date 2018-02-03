@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * a class Room that has the name of room, the description of the room,
  * the items in the room, and the direction it points to.
@@ -38,7 +40,7 @@ public class Room {
      * @param direction the direction the user chose
      * @return name of the next room from the input direction, else null
      */
-    public String getNextRoomName(String direction){
+    public String toNextRoom(String direction){
         if (direction.equalsIgnoreCase("quit")
             || direction.equalsIgnoreCase("exit")){
             System.exit(0);
@@ -51,19 +53,48 @@ public class Room {
         }
         return null;
     }
+
     /**
-     * a method that prints all the items in the room, print "nothing" if the items
+     * a method to get a currently uncarried items in the room
+     * @param carriedItems currently carried item array list
+     * @return rest of the items
      */
-    public void printItemsInRoom(){
-        StringBuilder currentItems = new StringBuilder();
+    public ArrayList<String> restItems(ArrayList<String> carriedItems){
+        ArrayList<String> restItems = new ArrayList<String>();
         if (items.length == 0){
+            return restItems;
+        }
+        for (String item : items){
+            restItems.add(item);
+        }
+        if (carriedItems.size() == 0) {
+            return restItems;
+        }
+        for (String item : restItems) {
+            for (String carriedItem : carriedItems){
+                if (carriedItem.equals(item)){
+                    restItems.remove(item);
+                }
+            }
+        }
+        return restItems;
+    }
+
+    /**
+     * a method to print the rest of the items in the room
+     * @param carriedItems items carried by the player
+     */
+    public void printItemsInRoom(ArrayList<String> carriedItems){
+        ArrayList<String> items = this.restItems(carriedItems);
+        StringBuilder currentItems = new StringBuilder();
+        if (items.size() == 0){
             currentItems.append("nothing");
         } else {
-            for (int i = 0; i < items.length; i++){
+            for (int i = 0; i < items.size(); i++){
                 if (i == 0){
-                    currentItems.append(items[i]);
+                    currentItems.append(items.get(i));
                 }else {
-                    currentItems.append(", " + items[i]);
+                    currentItems.append(", " + items.get(i));
                 }
             }
         }
