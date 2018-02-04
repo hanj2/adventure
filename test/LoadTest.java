@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 
-public class LoadAndLayoutTest {
+public class LoadTest {
     private final static String URL_OF_DEFAULT = "https://courses.engr.illinois.edu/cs126/sp2018/adventure/siebel.json";
     private final static String JSON_FILE = Load.getLoaclFileContent("Default.json");
     private AdventureGame adventure;
@@ -24,28 +24,13 @@ public class LoadAndLayoutTest {
         assertEquals(expected, Load.loadSourceCode(URL_OF_DEFAULT).replaceAll("\\s+",""));
     }
     @Test
-    public void testgetLayoutFromJson(){
+    public void testGetLayoutFromJson(){
         String expectedStart = "MatthewsStreet";
         String expectedEnd = "Siebel1314";
         int expectedRoomNum = 8;
         assertEquals(expectedStart, layout.getStartingRoomName());
         assertEquals(expectedEnd, layout.getEndingRoomName());
         assertEquals(expectedRoomNum, layout.getRooms().length);
-    }
-    @Test
-    public void testSearchStartingRoom(){
-        String expected = layout.getStartingRoomName();
-        assertEquals(expected, layout.searchStartingRoom().getName());
-    }
-    @Test
-    public void testSearchEndingRoom(){
-        String expected = layout.getEndingRoomName();
-        assertEquals(expected, layout.searchEndingRoom().getName());
-    }
-    @Test
-    public void testGetRoomByName(){
-        String expected ="AcmOffice";
-        assertEquals(expected, layout.getRoomByName(expected).getName());
     }
 
 }

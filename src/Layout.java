@@ -91,4 +91,25 @@ public class Layout{
             System.out.println("You have reached your final destination");
         }
     }
+
+    /**
+     * a method to test whether the starting room is to the ending Room
+     * @param start the starting room to search for
+     * @return whether the layout is a valid map
+     */
+    public boolean isMapValid(String start){
+        boolean isValid = false;
+        Room current = getRoomByName(start);
+        current.isVisited = true;
+        Direction[] directions = current.getDirections();
+        for (Direction direction : directions){
+            String next = direction.getRoom();
+            if (next.equals(endingRoom)){
+                return true;
+            }else if (!getRoomByName(next).isVisited){
+                isValid = isMapValid(next);
+            }
+        }
+        return isValid;
+    }
 }

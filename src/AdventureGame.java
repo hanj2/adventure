@@ -236,7 +236,13 @@ public class AdventureGame {
         }
 
         //get the layout of the game from the json file, start from the starting room
+        //ensure the layout map is valid, which means there is a way from the starting room to the ending room
         Layout layout = Load.getLayoutFromJson(JsonText);
+        if (!layout.isMapValid(layout.getStartingRoomName())){
+            System.out.println("The layout JSON is not valid." +
+                    "The endingRoom cannot be reached from the starting room.");
+        }
+
         adventure.currentRoomName = layout.getStartingRoomName();
         String endingRoomName = layout.getEndingRoomName();
 

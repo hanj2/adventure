@@ -12,6 +12,7 @@ public class Room {
     private Direction[] directions;
     public ArrayList<String> takenItems = new ArrayList<>();
     public ArrayList<String> droppedItems = new ArrayList<>();
+    public boolean isVisited = false;
 
     public String getName(){
         return name;
