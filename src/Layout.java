@@ -2,7 +2,7 @@
  * Layout the game environment with a starting room, an ending room, and an array of Room objects.
  */
 public class Layout{
-    private final static int PAUSE_TIME_TO_SLEEP = 77;
+    private final static int PAUSE_TIME_TO_SLEEP = 20;
     private String startingRoom;
     private String endingRoom;
     private Room[] rooms;

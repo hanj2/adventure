@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * a class Room that has the name of room, the description of the room,
@@ -9,6 +10,8 @@ public class Room {
     private String description;
     private String[] items;
     private Direction[] directions;
+    public ArrayList<String> takenItems = new ArrayList<>();
+    public ArrayList<String> droppedItems = new ArrayList<>();
 
     public String getName(){
         return name;
@@ -53,6 +56,17 @@ public class Room {
         }
         return null;
     }
+
+    public ArrayList<String> getCurrentItems() {
+        ArrayList<String> currentItems = new ArrayList<>();
+        if(items != null) {
+            currentItems.addAll(Arrays.asList(items));
+        }
+        currentItems.addAll(droppedItems);
+        currentItems.removeAll(takenItems);
+        return currentItems;
+    }
+
     /**
      * a method to get a currently uncarried items in the room
      * @param carriedItems currently carried item array list
@@ -60,20 +74,17 @@ public class Room {
      */
     public ArrayList<String> restItems(ArrayList<String> carriedItems){
         ArrayList<String> restItems = new ArrayList<String>();
-        if (items.length == 0){
+        if ((items == null|| items.length == 0) && droppedItems.isEmpty()){
             return restItems;
         }
-        for (String item : items){
-            restItems.add(item);
-        }
-        if (carriedItems.size() == 0) {
+        restItems.addAll(Arrays.asList(items));
+        restItems.addAll(droppedItems);
+        if (carriedItems == null ||carriedItems.isEmpty()) {
             return restItems;
         }
-        for (String item : restItems) {
-            for (String carriedItem : carriedItems){
-                if (carriedItem.equals(item)){
-                    restItems.remove(item);
-                }
+        for (String carriedItem : carriedItems){
+            if (restItems.contains(carriedItem)){
+                restItems.remove(carriedItem);
             }
         }
         return restItems;
@@ -83,9 +94,9 @@ public class Room {
      * @param carriedItems items carried by the player
      */
     public void printItemsInRoom(ArrayList<String> carriedItems){
-        ArrayList<String> items = this.restItems(carriedItems);
         StringBuilder currentItems = new StringBuilder();
-        if (items.size() == 0){
+        ArrayList<String> items = getCurrentItems();
+        if (items == null || items.isEmpty()){
             currentItems.append("nothing");
         } else {
             for (int i = 0; i < items.size(); i++){
