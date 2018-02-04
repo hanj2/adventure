@@ -4,8 +4,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
-public class LoadFromURL {
+public class Load {
     /**
      * load the text of the source code from the url web page by a url string input
      * @param urlString the string of the url input
@@ -32,5 +35,35 @@ public class LoadFromURL {
         Gson gson  = new Gson();
         Layout layoutOfGame = gson.fromJson(inputJson, Layout.class);
         return layoutOfGame;
+    }
+    /**
+     * get the content in the file as string
+     * @param filename the file name
+     * @return the content aa s string
+     */
+    public static String getLoaclFileContent(String filename) {
+        final Path path = FileSystems.getDefault().getPath("src", filename);
+        try {
+            return new String(Files.readAllBytes(path));
+        } catch (IOException e) {
+            System.out.println("Couldn't find file: " + filename);
+            System.exit(-1);
+            return null;
+        }
+    }
+    /**
+     * get the content in the file as string
+     * @param pathName the path of file
+     * @param filename the file name
+     * @return the string content
+     */
+    public static String getFileFromPath(String pathName, String filename) {
+        final Path path = FileSystems.getDefault().getPath(pathName, filename);
+        try {
+            return new String(Files.readAllBytes(path));
+        } catch (IOException e) {
+            System.out.println("Couldn't find file: " + filename);
+            return null;
+        }
     }
 }

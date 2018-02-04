@@ -56,7 +56,11 @@ public class Room {
         }
         return null;
     }
-
+    /**
+     * a method to get the current items in the roomm
+     * current items = original items + dropped items -taken items
+     * @return the current items
+     */
     public ArrayList<String> getCurrentItems() {
         ArrayList<String> currentItems = new ArrayList<>();
         if(items != null) {
@@ -66,31 +70,8 @@ public class Room {
         currentItems.removeAll(takenItems);
         return currentItems;
     }
-
     /**
-     * a method to get a currently uncarried items in the room
-     * @param carriedItems currently carried item array list
-     * @return rest of the items
-     */
-    public ArrayList<String> restItems(ArrayList<String> carriedItems){
-        ArrayList<String> restItems = new ArrayList<String>();
-        if ((items == null|| items.length == 0) && droppedItems.isEmpty()){
-            return restItems;
-        }
-        restItems.addAll(Arrays.asList(items));
-        restItems.addAll(droppedItems);
-        if (carriedItems == null ||carriedItems.isEmpty()) {
-            return restItems;
-        }
-        for (String carriedItem : carriedItems){
-            if (restItems.contains(carriedItem)){
-                restItems.remove(carriedItem);
-            }
-        }
-        return restItems;
-    }
-    /**
-     * a method to print the rest of the items in the room
+     * a method to print the current items in the room
      * @param carriedItems items carried by the player
      */
     public void printItemsInRoom(ArrayList<String> carriedItems){

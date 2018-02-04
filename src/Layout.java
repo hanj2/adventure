@@ -63,7 +63,6 @@ public class Layout{
         }
         return null;
     }
-
     /**
      * helper function to print string verbatim
      * @param input input String
@@ -77,7 +76,6 @@ public class Layout{
         int last = input.length() - 1;
         System.out.println(input.charAt(last));
     }
-
     /**
      * a method to print the description of the current room
      * @param currentRoomName name of the current room
@@ -93,5 +91,4 @@ public class Layout{
             System.out.println("You have reached your final destination");
         }
     }
-
 }

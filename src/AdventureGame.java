@@ -12,7 +12,7 @@ public class AdventureGame {
     private final static String DROP_COMMAND = "drop";
 
     public String currentRoomName;
-    private ArrayList<String> currentCarriedItems = new ArrayList<>();
+    public ArrayList<String> currentCarriedItems = new ArrayList<>();
 
     /**
      * get the current room
@@ -23,7 +23,7 @@ public class AdventureGame {
         return layout.getRoomByName(currentRoomName);
     }
     /**
-     * method to complain invalid input
+     * method to complain invalid input if the user type in an invalid command
      * @param inValidInput input that is not a command
      */
     public void complain(String inValidInput){
@@ -74,7 +74,6 @@ public class AdventureGame {
     public void carry(String itemInput, Layout layout){
         Room current = getCurrentRoom(layout);
         boolean canCarry = false;
-//        ArrayList<String> restItems = current.restItems(currentCarriedItems);
         ArrayList<String> currentItems = current.getCurrentItems();
         if ( !currentItems.isEmpty()){
             for (String currentItem : currentItems){
@@ -112,14 +111,13 @@ public class AdventureGame {
             System.out.println("I can't drop " + itemInput);
         }
     }
-
     /**
      * a method to count the number of words in an input line
      * @param line input
      * @return number
      */
     public int countInput(String line){
-        if (line.equals("")){
+        if (line.equals("") || line.equals("\n")){
             return 0;
         }
         String[] words = line.split(" ");
@@ -132,19 +130,41 @@ public class AdventureGame {
      */
     public String readStartingWord(String line){
         String[] words = line.split(" ");
+        if (words.length == 0){
+            return null;
+        }
         return words[0];
     }
     /**
-     * a function that reads the index word of the reader's input line
+     * a function that skips the first word of the reader's input line
      * @param line the whole line of input
-     * @return the first word of the whole line
+     * @return the substring without the first word and the fist empty space
      */
-    public String readIndexWord(String line, int index){
+    public String skipStartingWord(String line){
         String[] words = line.split(" ");
-        return words[index];
+        if (words.length <= 1){
+            return null;
+        }else{
+            int secondWordIndex = words[0].length();
+            return line.substring(secondWordIndex + 1);
+        }
     }
     /**
-     * method to treat the userInput
+     * a case insensitive method to treat the userInput
+     * if the input is just a "\n", let the user to enter again.
+     *
+     * the cases input line has just one word:
+     * if it is "quit" or "exit", stop the program;
+     * if it is "list", list all the items the user is carrying
+     * else, complain the invalid input
+     *
+     * the cases input line has more than one word:
+     * if it starts with a "go", check the rest words, move to the next room if the direction input is valid
+     * if it starts with a "take", check the rest words, carry the item if it is in the current room,
+     * the current items in the room should be changed
+     * if it starts with a "drop", check the rest words, drop the item if it is in the current carried items list
+     * else, complain the invalid input
+     *
      * @param input the input
      */
     public void read(String input, Layout layout){
@@ -161,26 +181,66 @@ public class AdventureGame {
             }
         }else {
             String start = readStartingWord(input);
-            String second = readIndexWord(input,1);
+            //String second = readIndexWord(input,1);
+            String skipStart = skipStartingWord(input);
             if (start.equalsIgnoreCase(GO_COMMAND)){
-                move(second, layout);
+                move(skipStart, layout);
             }else if (start.equalsIgnoreCase(TAKE_COMMAND)){
-                carry(second, layout);
+                carry(skipStart, layout);
             }else if (start.equalsIgnoreCase(DROP_COMMAND)){
-                drop(second, layout);
+                drop(skipStart, layout);
             }else {
                 complain(input);
             }
         }
     }
+
     // the main method to start a new game, every adventure should be a new one.
     public static void main(String[] args) throws IOException, InterruptedException {
         AdventureGame adventure = new AdventureGame();
-        String JsonText = LoadFromURL.loadSourceCode(URL_OF_DEFAULT);
-        Layout layout = LoadFromURL.getLayoutFromJson(JsonText);
         Scanner scanner = new Scanner(System.in);
+        StringBuilder path = new StringBuilder();
+        String filename;
+        String JsonText;
+
+        //get the alternative file path from the user
+        // if the user didn't choose an alternative one, just use the default layout
+        if (args.length > 0){
+            for (int i = 0; i < args.length - 1; i++) {
+                path.append(args[i]);
+            }
+            filename = args[args.length - 1];
+            JsonText = Load.getFileFromPath(path.toString(), filename);
+            System.out.println("You have successfully chosen the local file.");
+        }else {
+            JsonText = Load.loadSourceCode(URL_OF_DEFAULT);
+        }
+
+        //if the input is a bad file, ask the user if he/her want to play the game with the default layout
+        //the input must be either 0:YES or 1:NO
+        //if the user choose yes, the program will just load the default layout; if no, the program will stop.
+        if (JsonText == null){
+            System.out.println("Do you want to use the default layout in your adventure game?");
+            System.out.println("Please enter one number: 0.YES; 1.NO.");
+            String input;
+            do {
+                input = scanner.nextLine();
+                if (input.equals("0")){
+                    JsonText = Load.loadSourceCode(URL_OF_DEFAULT);
+                }else if(input.equals("1")){
+                    System.exit(0);
+                }else {
+                    System.out.println("Please Enter either 0 or 1!");
+                }
+            }while ( !input.equals("0") && !input.equals("1"));
+        }
+
+        //get the layout of the game from the json file, start from the starting room
+        Layout layout = Load.getLayoutFromJson(JsonText);
         adventure.currentRoomName = layout.getStartingRoomName();
         String endingRoomName = layout.getEndingRoomName();
+
+        //The game will continue until the user types the exit_command or enters the ending room
         while(true) {
             Room current = adventure.getCurrentRoom(layout);
             layout.printCurrentDescription(adventure.currentRoomName);
