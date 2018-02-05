@@ -10,6 +10,7 @@ public class AdventureGame {
     private final static String GO_COMMAND = "go";
     private final static String TAKE_COMMAND = "take";
     private final static String DROP_COMMAND = "drop";
+    private final static String STAY_COMMAND = "stay";
 
     public String currentRoomName;
     public ArrayList<String> currentCarriedItems = new ArrayList<>();
@@ -156,6 +157,7 @@ public class AdventureGame {
      * the cases input line has just one word:
      * if it is "quit" or "exit", stop the program;
      * if it is "list", list all the items the user is carrying
+     * if it is "stay", do nothing but tell the user don't be lazy
      * else, complain the invalid input
      *
      * the cases input line has more than one word:
@@ -174,8 +176,10 @@ public class AdventureGame {
         }else if (inputLength == 1){
             if (input.equalsIgnoreCase(EXIT_COMMAND1) || input.equalsIgnoreCase(EXIT_COMMAND2)){
                 System.exit(0);
-            }else if (input.equalsIgnoreCase(LIST_COMMAND)){
+            }else if (input.equalsIgnoreCase(LIST_COMMAND)) {
                 list();
+            }else if (input.equalsIgnoreCase(STAY_COMMAND)){
+                System.out.println("You are supposed to finished your journey! Don't be lazy!");
             }else {
                 complain(input);
             }
