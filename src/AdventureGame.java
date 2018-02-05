@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class AdventureGame {
     private final static String URL_OF_DEFAULT = "https://courses.engr.illinois.edu/cs126/sp2018/adventure/siebel.json";
+
     private final static String EXIT_COMMAND1 = "quit";
     private final static String EXIT_COMMAND2 = "exit";
     private final static String LIST_COMMAND = "list";
@@ -12,6 +13,7 @@ public class AdventureGame {
     private final static String DROP_COMMAND = "drop";
     private final static String STAY_COMMAND = "stay";
 
+    public boolean isRunning = false;
     public String currentRoomName;
     public ArrayList<String> currentCarriedItems = new ArrayList<>();
 
@@ -185,7 +187,6 @@ public class AdventureGame {
             }
         }else {
             String start = readStartingWord(input);
-            //String second = readIndexWord(input,1);
             String skipStart = skipStartingWord(input);
             if (start.equalsIgnoreCase(GO_COMMAND)){
                 move(skipStart, layout);
@@ -247,20 +248,22 @@ public class AdventureGame {
                     "The endingRoom cannot be reached from the starting room.");
         }
 
+        //start playing the game
         adventure.currentRoomName = layout.getStartingRoomName();
         String endingRoomName = layout.getEndingRoomName();
-
+        adventure.isRunning = true;
         //The game will continue until the user types the exit_command or enters the ending room
-        while(true) {
+        while(adventure.isRunning) {
             Room current = adventure.getCurrentRoom(layout);
             layout.printCurrentDescription(adventure.currentRoomName);
             if (adventure.currentRoomName.equals(endingRoomName)){
                 break;
             }
-            current.printItemsInRoom(adventure.currentCarriedItems);
+            current.printItemsInRoom();
             current.printDirectionFromRoom();
             adventure.read(scanner.nextLine(),layout);
         }
         scanner.close();
     }
+
 }

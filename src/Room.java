@@ -73,9 +73,8 @@ public class Room {
     }
     /**
      * a method to print the current items in the room
-     * @param carriedItems items carried by the player
      */
-    public void printItemsInRoom(ArrayList<String> carriedItems){
+    public void printItemsInRoom(){
         StringBuilder currentItems = new StringBuilder();
         ArrayList<String> items = getCurrentItems();
         if (items == null || items.isEmpty()){

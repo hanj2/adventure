@@ -34,8 +34,7 @@ public class Load {
      */
     public static Layout getLayoutFromJson(String inputJson){
         Gson gson  = new Gson();
-        Layout layoutOfGame = gson.fromJson(inputJson, Layout.class);
-        return layoutOfGame;
+        return gson.fromJson(inputJson, Layout.class);
     }
     /**
      * get the content in the file as string
@@ -43,7 +42,7 @@ public class Load {
      * @return the content aa s string
      */
     public static String getLoaclFileContent(String filename) {
-        final Path path = FileSystems.getDefault().getPath("src", filename);
+        final Path path = FileSystems.getDefault().getPath("data", filename);
         try {
             return new String(Files.readAllBytes(path));
         } catch (IOException e) {

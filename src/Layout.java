@@ -66,7 +66,7 @@ public class Layout{
     /**
      * helper function to print string verbatim
      * @param input input String
-     * @throws InterruptedException
+     * @throws InterruptedException throw the exception
      */
     public void printVerbatim(String input) throws InterruptedException {
         for (int i = 0; i < input.length() - 1; i++ ){
@@ -131,6 +131,7 @@ public class Layout{
     /**
      * check whether for every room in the layout, if you can get from room A to B, then you can get from B to A
      * @return whether the layout is floor plan valid
+     *  if there is a pair of rooms that is not a floor plan (with a exclusive or testing), return false
      */
     public boolean isFloorPlanValid(){
         boolean isValid = true;
