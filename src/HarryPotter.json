@@ -1,0 +1,110 @@
+{
+  "startingRoom": "Hagrid's Chamber",
+  "endingRoom": "Mirror of Erised",
+  "rooms": [
+    {
+      "name": "Hagrid's Chamber",
+      "description": "A trapdoor in the Third-floor corridor, which was guarded by the three-headed dog Fluffy.",
+      "items": ["Fluffy", "music player"],
+      "directions": [
+        {
+          "directionName": "West",
+          "room": "Sprout's Chamber"
+        },
+        {
+          "directionName": "South",
+          "room": "Flitwick's Chamber"
+        }
+      ]
+    },
+    {
+      "name": "Sprout's Chamber",
+      "description": "A long and dark drop through the air led into a chamber full of Devil's Snare.",
+      "items": ["plant"],
+      "directions": [
+        {
+          "directionName": "East",
+          "room": "Hagrid's Chamber"
+        },
+        {
+          "directionName": "South",
+          "room": "McGonagall's Chamber"
+        }
+      ]
+    },
+    {
+      "name": "Flitwick's Chamber",
+      "description": "A large, old-fashioned wooden door with a silver lock that would not open without the necessary key.",
+      "items": ["broom","key"],
+      "directions": [
+        {
+          "directionName": "North",
+          "room": "Hagrid's Chamber"
+        },
+        {
+          "directionName": "East",
+          "room": "Snape's Chamber"
+        }
+      ]
+    },
+    {
+      "name": "McGonagall's Chamber",
+      "description": "The next chamber was so dark that it was impossible to see anything. It contained a Human Chess Game.",
+      "items": ["chess"],
+      "directions": [
+        {
+          "directionName": "North",
+          "room": "Hagrid's Chamber"
+        },
+        {
+          "directionName": "Southeast",
+          "room": "Quirrell’s Chamber"
+        }
+      ]
+    },
+    {
+      "name": "Quirrell’s Chamber",
+      "description": "A chamber containing a mountain troll at the entrance; it had a foul odour in it.",
+      "directions": [
+        {
+          "directionName": "Northwest",
+          "room": "McGonagall's Chamber"
+        },
+        {
+          "directionName": "Northeast",
+          "room": "Snape's Chamber"
+        }
+      ]
+    },
+    {
+      "name": "Snape's Chamber",
+      "description": "Upon entering the chamber, the entrance was blocked by purple flames, whilst the exit was covered by black flames.",
+      "items": ["poison", "wine","water","weedosoros"],
+      "directions": [
+        {
+          "directionName": "West",
+          "room": "Flitwick's Chamber"
+        },
+        {
+          "directionName": "Southwest",
+          "room": "Quirrell’s Chamber"
+        },
+        {
+          "directionName": "East",
+          "room": "Mirror of Erised"
+        }
+      ]
+    },
+    {
+      "name": "Mirror of Erised",
+      "description": "The final obstacle was the Mirror of Erised, designed and set by Albus Dumbledore.",
+      "items": ["mirror", "stone","Voldemort"],
+      "directions": [
+        {
+          "directionName": "North",
+          "room": "Snape's Chamber"
+        }
+      ]
+    }
+  ]
+}
