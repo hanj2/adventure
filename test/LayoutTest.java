@@ -2,11 +2,14 @@ import com.google.gson.Gson;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class LayoutTest {
     private final static String URL_OF_DEFAULT = "https://courses.engr.illinois.edu/cs126/sp2018/adventure/siebel.json";
+    private final static String URL_OF_CIRCULAR_JSON = "https://courses.engr.illinois.edu/cs126/sp2018/adventure/circular.json";
     private final static String JSON_FILE = Load.getLoaclFileContent("Default.json");
     private AdventureGame adventure;
     private Layout layout;
@@ -37,7 +40,10 @@ public class LayoutTest {
         assertTrue(layout.isMapValid(layout.getStartingRoomName()));
     }
     @Test
-    public void testIsFloorPlanValid(){
+    public void testIsFloorPlanValid() throws IOException {
         assertTrue(layout.isFloorPlanValid());
+        Gson gson = new Gson();
+        layout = gson.fromJson(Load.loadSourceCode(URL_OF_CIRCULAR_JSON), Layout.class);
+        assertTrue(!layout.isFloorPlanValid());
     }
 }
