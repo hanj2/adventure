@@ -112,4 +112,39 @@ public class Layout{
         }
         return isValid;
     }
+    //a helper function to see if a room is to another room
+    public boolean isFloorPlanValidWrapper(String start, String end){
+        boolean isValid = false;
+        Room current = getRoomByName(start);
+        current.isVisited = true;
+        Direction[] directions = current.getDirections();
+        for (Direction direction : directions){
+            String next = direction.getRoom();
+            if (next.equals(end)){
+                return true;
+            }else if (!getRoomByName(next).isVisited){
+                isValid = isMapValid(next);
+            }
+        }
+        return isValid;
+    }
+    /**
+     * check whether for every room in the layout, if you can get from room A to B, then you can get from B to A
+     * @return whether the layout is floor plan valid
+     */
+    public boolean isFloorPlanValid(){
+        boolean isValid = true;
+        for (int i = 0; i < this.rooms.length; i++){
+            for (int j = 0; j < this.rooms.length; j++){
+                if (i != j ){
+                    String start = rooms[i].getName();
+                    String end = rooms[j].getName();
+                    if (isFloorPlanValidWrapper(start,end) ^ isFloorPlanValidWrapper(end,start)){
+                        isValid = false;
+                    }
+                }
+            }
+        }
+        return isValid;
+    }
 }

@@ -10,6 +10,7 @@ import java.nio.file.Path;
 
 public class Load {
     /**
+     * retrieve from https://stackoverflow.com/questions/8616781/how-to-get-a-web-pages-source-code-from-java
      * load the text of the source code from the url web page by a url string input
      * @param urlString the string of the url input
      * @return the text of source code

@@ -36,4 +36,8 @@ public class LayoutTest {
     public void testIsMapValid(){
         assertTrue(layout.isMapValid(layout.getStartingRoomName()));
     }
+    @Test
+    public void testIsFloorPlanValid(){
+        assertTrue(layout.isFloorPlanValid());
+    }
 }
