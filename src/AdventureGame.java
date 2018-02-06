@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class AdventureGame {
     private final static String URL_OF_DEFAULT = "https://courses.engr.illinois.edu/cs126/sp2018/adventure/siebel.json";
-
+    //all valid commands
     private final static String EXIT_COMMAND1 = "quit";
     private final static String EXIT_COMMAND2 = "exit";
     private final static String LIST_COMMAND = "list";
@@ -70,9 +70,11 @@ public class AdventureGame {
             System.out.println("I can't go " + direction);
         }
     }
+
     /**
      * method to carry an item
      * @param itemInput item to carry
+     * @param layout layout of the game
      */
     public void carry(String itemInput, Layout layout){
         Room current = getCurrentRoom(layout);
@@ -94,7 +96,8 @@ public class AdventureGame {
     }
     /**
      * method to drop an item
-     * @param itemInput ietm to drop
+     * @param itemInput item to drop
+     * @param layout the layout of the game
      */
     public void drop(String itemInput, Layout layout){
         boolean canDrop = false;
@@ -154,28 +157,18 @@ public class AdventureGame {
     }
     /**
      * a case insensitive method to treat the userInput
-     * if the input is just a "\n", let the user to enter again.
-     *
-     * the cases input line has just one word:
-     * if it is "quit" or "exit", stop the program;
-     * if it is "list", list all the items the user is carrying
-     * if it is "stay", do nothing but tell the user don't be lazy
-     * else, complain the invalid input
-     *
-     * the cases input line has more than one word:
-     * if it starts with a "go", check the rest words, move to the next room if the direction input is valid
-     * if it starts with a "take", check the rest words, carry the item if it is in the current room,
-     * the current items in the room should be changed
-     * if it starts with a "drop", check the rest words, drop the item if it is in the current carried items list
-     * else, complain the invalid input
-     *
+     * it should be able to check the first word , the words except the first word, and complain invalid inputs
      * @param input the input
      */
     public void read(String input, Layout layout){
         int inputLength = countInput(input);
+        //if the input is just a "\n", let the user to enter again
         if (inputLength == 0){
             System.out.println("Please enter again: ");
         }else if (inputLength == 1){
+            // the cases input line has just one word:
+            // "quit" or "exit", stop the program; "list", list all the items the user is carrying
+            //  "stay", do nothing but tell the user don't be lazy
             if (input.equalsIgnoreCase(EXIT_COMMAND1) || input.equalsIgnoreCase(EXIT_COMMAND2)){
                 System.exit(0);
             }else if (input.equalsIgnoreCase(LIST_COMMAND)) {
@@ -185,6 +178,10 @@ public class AdventureGame {
             }else {
                 complain(input);
             }
+            // the cases input line has more than one word:
+            // starts with a "go",move to the next room if the direction input is valid
+            // starts with a "take", carry the item if it is in the current room
+            // starts with a "drop", check the rest words, drop the item if it is in the current carried items list
         }else {
             String start = readStartingWord(input);
             String skipStart = skipStartingWord(input);
@@ -225,7 +222,7 @@ public class AdventureGame {
         //the input must be either 0:YES or 1:NO
         //if the user choose yes, the program will just load the default layout; if no, the program will stop.
         if (JsonText == null){
-            System.out.println("Do you want to use the default layout in your adventure game?");
+            System.out.println("File not found! Do you want to use the default layout in your adventure game?");
             System.out.println("Please enter one number: 0.YES; 1.NO.");
             String input;
             do {
@@ -252,6 +249,7 @@ public class AdventureGame {
         adventure.currentRoomName = layout.getStartingRoomName();
         String endingRoomName = layout.getEndingRoomName();
         adventure.isRunning = true;
+
         //The game will continue until the user types the exit_command or enters the ending room
         while(adventure.isRunning) {
             Room current = adventure.getCurrentRoom(layout);

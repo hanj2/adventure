@@ -19,4 +19,11 @@ public class Direction{
         this.room = room;
     }
 
+    //method to compare two Directions
+    public boolean equals(Direction other){
+        if ( !directionName.equals(other.directionName) || !room.equals(other.room)) {
+            return false;
+        }
+        return true;
+    }
 }

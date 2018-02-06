@@ -5,6 +5,7 @@ import java.util.Arrays;
  * a class Room that has the name of room, the description of the room,
  * the items in the room, and the direction it points to.
  */
+@SuppressWarnings("ALL")
 public class Room {
     private String name;
     private String description;
@@ -39,6 +40,24 @@ public class Room {
         this.directions = directions;
     }
 
+    // method to compare two rooms
+    public boolean equals(Room other){
+        if ( !name.equals(other.name)){
+            return false;
+        }
+        if(directions.length != other.directions.length){
+            return false;
+        }
+        if (directions.length == 0){
+            return true;
+        }
+        for (int i = 0; i < directions.length; i++){
+            if (directions[i].equals(other.directions[i])){
+                return false;
+            }
+        }
+        return true;
+    }
     /**
      *  a method return the next room the user want to go
      * @param direction the direction the user chose
@@ -71,9 +90,8 @@ public class Room {
         currentItems.removeAll(takenItems);
         return currentItems;
     }
-    /**
-     * a method to print the current items in the room
-     */
+
+    // a method to print the current items in the room
     public void printItemsInRoom(){
         StringBuilder currentItems = new StringBuilder();
         ArrayList<String> items = getCurrentItems();
@@ -90,9 +108,8 @@ public class Room {
         }
         System.out.println("This room contains " + currentItems);
     }
-    /**
-     * a method print all directions from the room
-     */
+
+     // a method print all directions from the room
     public void printDirectionFromRoom(){
         StringBuilder directionNames = new StringBuilder();
         for (int i = 0; i < directions.length; i++){

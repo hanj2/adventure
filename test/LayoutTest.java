@@ -15,10 +15,10 @@ public class LayoutTest {
     private Layout layout;
 
     @Before
-    public void setUp(){
+    public void setUp()throws IOException {
         adventure = new AdventureGame();
         Gson gson = new Gson();
-        layout = gson.fromJson(JSON_FILE, Layout.class);
+        layout = gson.fromJson(Load.loadSourceCode(URL_OF_DEFAULT), Layout.class);
     }
     @Test
     public void testSearchStartingRoom(){
@@ -29,6 +29,20 @@ public class LayoutTest {
     public void testSearchEndingRoom(){
         String expected = layout.getEndingRoomName();
         assertEquals(expected, layout.searchEndingRoom().getName());
+    }
+    @Test
+    public void testRooms(){
+        boolean expected = true;
+        Layout test = Load.getLayoutFromJson(JSON_FILE);
+        if (test.getRooms() != null && layout.getRooms()!= null
+                && test.getRooms().length == layout.getRooms().length){
+            for (int i = 0; i < layout.getRooms().length; i++){
+                if (test.getRooms()[i].equals(layout.getRooms()[i])){
+                    expected = false;
+                }
+            }
+        }
+        assertTrue(expected);
     }
     @Test
     public void testGetRoomByName(){
