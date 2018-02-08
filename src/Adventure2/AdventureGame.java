@@ -56,21 +56,22 @@ public class AdventureGame {
      * a method to move to the next room, change the static variable currentRoomName
      * @param direction input direction
      */
-    public void move(String direction, Layout layout){
-        boolean isValidDirection = false;
+    public boolean move(String direction, Layout layout){
+        boolean moved = false;
         Room current = getCurrentRoom(layout);
         Direction[] directions = current.getDirections();
         for (Direction validDirection : directions){
             if (validDirection.getDirectionName().equalsIgnoreCase(direction)){
-                isValidDirection = true;
+                moved = true;
                 break;
             }
         }
-        if (isValidDirection) {
+        if (moved) {
             currentRoomName = current.toNextRoom(direction);
         } else {
             System.out.println("I can't go " + direction);
         }
+        return moved;
     }
 
     /**
@@ -78,7 +79,7 @@ public class AdventureGame {
      * @param itemInput item to carry
      * @param layout layout of the game
      */
-    public void carry(String itemInput, Layout layout){
+    public boolean carry(String itemInput, Layout layout){
         Room current = getCurrentRoom(layout);
         boolean canCarry = false;
         ArrayList<Item> currentItems = current.getCurrentItems();
@@ -95,13 +96,14 @@ public class AdventureGame {
         } else {
             System.out.println("I can't carry " + itemInput);
         }
+        return canCarry;
     }
     /**
      * method to drop an item
      * @param itemInput item to drop
      * @param layout the layout of the game
      */
-    public void drop(String itemInput, Layout layout){
+    public boolean drop(String itemInput, Layout layout){
         boolean canDrop = false;
         Room current = getCurrentRoom(layout);
         if ( !currentCarriedItems.isEmpty()) {
@@ -118,6 +120,7 @@ public class AdventureGame {
         } else {
             System.out.println("I can't drop " + itemInput);
         }
+        return canDrop;
     }
     /**
      * a method to count the number of words in an input line
@@ -176,7 +179,7 @@ public class AdventureGame {
             }else if (input.equalsIgnoreCase(LIST_COMMAND)) {
                 list();
             }else if (input.equalsIgnoreCase(STAY_COMMAND)){
-                System.out.println("You are supposed to finished your journey! Don't be lazy!");
+                System.out.println("You are supposed to finish your journey! Don't be lazy!");
             }else {
                 complain(input);
             }
