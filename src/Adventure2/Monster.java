@@ -31,5 +31,5 @@ public class Monster {
     public void setHealth(Double health) {
         this.health = health;
     }
-    
+
 }
