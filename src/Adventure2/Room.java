@@ -1,7 +1,6 @@
 package Adventure2;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * a class Room that has the name of room, the description of the room,
@@ -11,10 +10,11 @@ import java.util.Arrays;
 public class Room {
     private String name;
     private String description;
-    private String[] items;
+//    private String[] items;
     private Direction[] directions;
-    public ArrayList<String> takenItems = new ArrayList<>();
-    public ArrayList<String> droppedItems = new ArrayList<>();
+    private ArrayList<Item> items;
+    public ArrayList<Item> takenItems = new ArrayList<>();
+    public ArrayList<Item> droppedItems = new ArrayList<>();
     public boolean isVisited = false;
 
     public String getName(){
@@ -22,9 +22,6 @@ public class Room {
     }
     public String getDescription(){
         return description;
-    }
-    public String[] getItems(){
-        return items;
     }
     public Direction[] getDirections(){
         return directions;
@@ -34,9 +31,6 @@ public class Room {
     }
     public void setDescription(String description){
         this.description = description;
-    }
-    public void setItems(String[] items){
-        this.items = items;
     }
     public void setDirections(Direction[] directions){
         this.directions = directions;
@@ -83,10 +77,10 @@ public class Room {
      * current items = original items + dropped items -taken items
      * @return the current items
      */
-    public ArrayList<String> getCurrentItems() {
-        ArrayList<String> currentItems = new ArrayList<>();
+    public ArrayList<Item> getCurrentItems() {
+        ArrayList<Item> currentItems = new ArrayList<>();
         if(items != null) {
-            currentItems.addAll(Arrays.asList(items));
+            currentItems.addAll(items);
         }
         currentItems.addAll(droppedItems);
         currentItems.removeAll(takenItems);
@@ -96,15 +90,15 @@ public class Room {
     // a method to print the current items in the room
     public void printItemsInRoom(){
         StringBuilder currentItems = new StringBuilder();
-        ArrayList<String> items = getCurrentItems();
+        ArrayList<Item> items = getCurrentItems();
         if (items == null || items.isEmpty()){
             currentItems.append("nothing");
         } else {
             for (int i = 0; i < items.size(); i++){
                 if (i == 0){
-                    currentItems.append(items.get(i));
+                    currentItems.append(items.get(i).getName());
                 }else {
-                    currentItems.append(", " + items.get(i));
+                    currentItems.append(", " + items.get(i).getName());
                 }
             }
         }
