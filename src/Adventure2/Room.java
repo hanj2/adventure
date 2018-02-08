@@ -31,7 +31,7 @@ public class Room {
     public Item[] getItems() {
         return items;
     }
-    public String[] getMonstersInRoom() {
+    public String[] getNamesOfMonstersInRoom() {
         return monstersInRoom;
     }
 
@@ -136,11 +136,21 @@ public class Room {
         System.out.println("From here, you can go: " + directionNames);
     }
 
+    //a helper function to get the map of items
     public HashMap<String, Item> getMapOfItems(){
         HashMap<String, Item> mapOfItems = new HashMap<String, Item>();
         for (Item item : getCurrentItems()){
             mapOfItems.put(item.getName(), item);
         }
         return mapOfItems;
+    }
+    
+    // a helper function to get the monsterList in the room
+    public ArrayList<Monster> getMonsterList(Layout layout){
+        ArrayList<Monster> monsters = new ArrayList<>();
+        for (String monster : monstersInRoom){
+            monsters.add(layout.mapOfMonsters().get(monster));
+        }
+        return monsters;
     }
 }

@@ -19,7 +19,6 @@ public class Monster {
         this.attack = attack;
     }
     public Double getDefense() {
-
         return defense;
     }
     public void setDefense(Double defense) {
@@ -31,5 +30,4 @@ public class Monster {
     public void setHealth(Double health) {
         this.health = health;
     }
-
 }

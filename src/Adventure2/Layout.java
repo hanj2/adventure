@@ -1,6 +1,7 @@
 package Adventure2;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Layout the game environment with a starting room, an ending room, and an array of Room objects.
@@ -10,9 +11,25 @@ public class Layout {
     private String startingRoom;
     private String endingRoom;
     private Room[] rooms;
+    private Player player;
+    private Monster[] monsters;
     public ArrayList<Player> players;
-    public ArrayList<Monster> monsters;
 
+    public String getStartingRoomName(){
+        return startingRoom;
+    }
+    public String getEndingRoomName(){
+        return endingRoom;
+    }
+    public Room[] getRooms(){
+        return rooms;
+    }
+    public Player getPlayer() {
+        return player;
+    }
+    public Monster[] getMonsters() {
+        return monsters;
+    }
 
     public void setStartingRoom(String startingRoom){
         this.startingRoom = startingRoom;
@@ -23,14 +40,8 @@ public class Layout {
     public void setRooms (Room[] rooms){
         this.rooms = rooms;
     }
-    public String getStartingRoomName(){
-        return startingRoom;
-    }
-    public String getEndingRoomName(){
-        return endingRoom;
-    }
-    public Room[] getRooms(){
-        return rooms;
+    public void setMonsters(Monster[] monsters) {
+        this.monsters = monsters;
     }
 
     /**
@@ -86,7 +97,7 @@ public class Layout {
     /**
      * a method to print the description of the current room
      * @param currentRoomName name of the current room
-     * @throws InterruptedException
+     * @throws InterruptedException no interruption
      */
     public void printCurrentDescription(String currentRoomName) throws InterruptedException {
         Room current  = getRoomByName(currentRoomName);
@@ -155,4 +166,13 @@ public class Layout {
         }
         return isValid;
     }
+    //create a monster map to connect names and monster
+    public HashMap<String, Monster> mapOfMonsters(){
+        HashMap<String, Monster> mapOfMonsters = new HashMap<String, Monster>();
+        for (Monster monster: monsters){
+            mapOfMonsters.put(monster.getName(), monster);
+        }
+        return mapOfMonsters;
+    }
+
 }
