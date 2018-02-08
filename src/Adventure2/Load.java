@@ -43,7 +43,7 @@ public class Load {
      * @param filename the file name
      * @return the content aa s string
      */
-    public static String getLoaclFileContent(String filename) {
+    public static String getLocalFileContent(String filename) {
         final Path path = FileSystems.getDefault().getPath("data", filename);
         try {
             return new String(Files.readAllBytes(path));
