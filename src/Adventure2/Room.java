@@ -144,7 +144,7 @@ public class Room {
         }
         return mapOfItems;
     }
-    
+
     // a helper function to get the monsterList in the room
     public ArrayList<Monster> getMonsterList(Layout layout){
         ArrayList<Monster> monsters = new ArrayList<>();
