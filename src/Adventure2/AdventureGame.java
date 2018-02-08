@@ -81,17 +81,17 @@ public class AdventureGame {
     public void carry(String itemInput, Layout layout){
         Room current = getCurrentRoom(layout);
         boolean canCarry = false;
-        ArrayList<String> currentItems = current.getCurrentItems();
+        ArrayList<Item> currentItems = current.getCurrentItems();
         if ( !currentItems.isEmpty()){
-            for (String currentItem : currentItems){
-                if (currentItem.equalsIgnoreCase(itemInput)){
+            for (Item currentItem : currentItems){
+                if (currentItem.getName().equalsIgnoreCase(itemInput)){
                     canCarry = true;
                 }
             }
         }
         if (canCarry) {
             currentCarriedItems.add(itemInput);
-            current.takenItems.add(itemInput);
+            current.takenItems.add(current.getMapOfItems().get(itemInput));
         } else {
             System.out.println("I can't carry " + itemInput);
         }
@@ -114,7 +114,7 @@ public class AdventureGame {
         }
         if (canDrop) {
             currentCarriedItems.remove(itemInput);
-            current.droppedItems.add(itemInput);
+            current.droppedItems.add(current.getMapOfItems().get(itemInput));
         } else {
             System.out.println("I can't drop " + itemInput);
         }

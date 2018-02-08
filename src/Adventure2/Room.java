@@ -1,6 +1,8 @@
 package Adventure2;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 
 /**
  * a class Room that has the name of room, the description of the room,
@@ -11,7 +13,7 @@ public class Room {
     private String name;
     private String description;
     private Direction[] directions;
-    private ArrayList<Item> items;
+    private Item[] items;
     public ArrayList<Item> takenItems = new ArrayList<>();
     public ArrayList<Item> droppedItems = new ArrayList<>();
     private String[] monstersInRoom;
@@ -26,7 +28,7 @@ public class Room {
     public Direction[] getDirections(){
         return directions;
     }
-    public ArrayList<Item> getItems() {
+    public Item[] getItems() {
         return items;
     }
     public String[] getMonstersInRoom() {
@@ -42,7 +44,7 @@ public class Room {
     public void setDirections(Direction[] directions){
         this.directions = directions;
     }
-    public void setItems(ArrayList<Item> items) {
+    public void setItems(Item[] items) {
         this.items = items;
     }
     public void setMonstersInRoom(String[] monstersInRoom) {
@@ -93,7 +95,7 @@ public class Room {
     public ArrayList<Item> getCurrentItems() {
         ArrayList<Item> currentItems = new ArrayList<>();
         if(items != null) {
-            currentItems.addAll(items);
+            currentItems.addAll(Arrays.asList(items));
         }
         currentItems.addAll(droppedItems);
         currentItems.removeAll(takenItems);
@@ -132,5 +134,13 @@ public class Room {
             }
         }
         System.out.println("From here, you can go: " + directionNames);
+    }
+
+    public HashMap<String, Item> getMapOfItems(){
+        HashMap<String, Item> mapOfItems = new HashMap<String, Item>();
+        for (Item item : getCurrentItems()){
+            mapOfItems.put(item.getName(), item);
+        }
+        return mapOfItems;
     }
 }
