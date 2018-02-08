@@ -10,11 +10,11 @@ import java.util.ArrayList;
 public class Room {
     private String name;
     private String description;
-//    private String[] items;
     private Direction[] directions;
     private ArrayList<Item> items;
     public ArrayList<Item> takenItems = new ArrayList<>();
     public ArrayList<Item> droppedItems = new ArrayList<>();
+    private String[] monstersInRoom;
     public boolean isVisited = false;
 
     public String getName(){
@@ -26,6 +26,13 @@ public class Room {
     public Direction[] getDirections(){
         return directions;
     }
+    public ArrayList<Item> getItems() {
+        return items;
+    }
+    public String[] getMonstersInRoom() {
+        return monstersInRoom;
+    }
+
     public void setName(String name){
         this.name = name;
     }
@@ -34,6 +41,12 @@ public class Room {
     }
     public void setDirections(Direction[] directions){
         this.directions = directions;
+    }
+    public void setItems(ArrayList<Item> items) {
+        this.items = items;
+    }
+    public void setMonstersInRoom(String[] monstersInRoom) {
+        this.monstersInRoom = monstersInRoom;
     }
 
     // method to compare two rooms
