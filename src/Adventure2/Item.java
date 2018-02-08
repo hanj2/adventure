@@ -3,7 +3,7 @@ package Adventure2;
 public class Item {
     private String name;
     private Double damage;
-    
+
     public String getName() {
         return name;
     }
