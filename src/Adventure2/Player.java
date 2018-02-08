@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Player {
     private String name;
-    public ArrayList<Item> items = new ArrayList<>();
+    public ArrayList<Item> items;
     public Double attack;
     public Double defense;
     public Double health;
