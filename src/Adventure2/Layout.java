@@ -1,5 +1,7 @@
 package Adventure2;
 
+import java.util.ArrayList;
+
 /**
  * Layout the game environment with a starting room, an ending room, and an array of Room objects.
  */
@@ -8,6 +10,9 @@ public class Layout {
     private String startingRoom;
     private String endingRoom;
     private Room[] rooms;
+    public ArrayList<Player> players;
+    public ArrayList<Monster> monsters;
+
 
     public void setStartingRoom(String startingRoom){
         this.startingRoom = startingRoom;
