@@ -171,9 +171,26 @@ public class Room {
     // a helper function to get the monsterList in the room
     public ArrayList<Monster> getMonsterList(Layout layout){
         ArrayList<Monster> monsters = new ArrayList<>();
+        if (monstersInRoom == null || monstersInRoom.length == 0){
+            return monsters;
+        }
         for (String monster : monstersInRoom){
             monsters.add(layout.mapOfMonsters().get(monster));
         }
         return monsters;
+    }
+
+    //a helper function to check whether all monsters in room are defeated
+    public boolean areAllMonstersDefeated(Layout layout){
+        boolean areAllDefeated = true;
+        if (monstersInRoom == null || monstersInRoom.length == 0){
+            return areAllDefeated;
+        }
+        for (Monster monster : getMonsterList(layout)){
+            if (monster.getHealth() > 0){
+                areAllDefeated = false;
+            }
+        }
+        return areAllDefeated;
     }
 }
