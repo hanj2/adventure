@@ -1,10 +1,15 @@
 package Adventure2;
 
+/**
+ * Monster in the game.
+ * a monster has a name, attack value, defense value and health value
+ * if the health value is not positive, then the monster is dead
+ */
 public class Monster {
     private String name;
     private Double attack;
     private Double defense;
-    private Double health;
+    public Double health;
 
     public String getName() {
         return name;
@@ -23,11 +28,5 @@ public class Monster {
     }
     public void setDefense(Double defense) {
         this.defense = defense;
-    }
-    public Double getHealth() {
-        return health;
-    }
-    public void setHealth(Double health) {
-        this.health = health;
     }
 }

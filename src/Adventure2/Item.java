@@ -1,5 +1,8 @@
 package Adventure2;
 
+/**
+ * Item in the game has a name and a damage value.
+ */
 public class Item {
     private String name;
     private Double damage;

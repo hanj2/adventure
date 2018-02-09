@@ -3,13 +3,21 @@ package Adventure2;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Player in the game.
+ * The player has a name, an array of items, an attack value, a defense value, a health value;
+ * a level and an experience value which are both 0 at first;
+ * a list of taken items and a list of dropped items.
+ */
 public class Player {
     private String name;
     private Item[] items;
-    public Double attack;
-    public Double defense;
+    private Double attack;
+    private Double defense;
     public Double health;
-    public Integer level;
+    public Integer level = 0;
+    public Boolean isInDuel = false;
+    public Integer experience = 0;
     public ArrayList<Item> takenItems = new ArrayList<>();
     public ArrayList<Item> droppedItems = new ArrayList<>();
 
@@ -24,6 +32,18 @@ public class Player {
     }
     public void setItems(Item[] items) {
         this.items = items;
+    }
+    public Double getAttack() {
+        return attack;
+    }
+    public void setAttack(Double attack) {
+        this.attack = attack;
+    }
+    public Double getDefense() {
+        return defense;
+    }
+    public void setDefense(Double defense) {
+        this.defense = defense;
     }
 
     public ArrayList<Item> getCurrentItemsOfPlayer(){

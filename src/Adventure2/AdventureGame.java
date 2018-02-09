@@ -7,13 +7,15 @@ import java.util.Scanner;
 public class AdventureGame {
     private final static String URL_OF_DEFAULT = "https://courses.engr.illinois.edu/cs126/sp2018/adventure/siebel.json";
     //all valid commands
-    private final static String EXIT_COMMAND1 = "quit";
-    private final static String EXIT_COMMAND2 = "exit";
-    private final static String LIST_COMMAND = "list";
+    public final static String EXIT_COMMAND1 = "quit";
+    public final static String EXIT_COMMAND2 = "exit";
+    public final static String LIST_COMMAND = "list";
     private final static String GO_COMMAND = "go";
     private final static String TAKE_COMMAND = "take";
     private final static String DROP_COMMAND = "drop";
     private final static String STAY_COMMAND = "stay";
+    private final static String PLAY_INFO_COMMAND = "playerinfo";
+    private final static String DUEL_COMMAND = "duel";
 
     public boolean isRunning = false;
     public String currentRoomName;
@@ -73,7 +75,6 @@ public class AdventureGame {
         }
         return moved;
     }
-
     /**
      * method to carry an item
      * @param itemInput item to carry
@@ -81,6 +82,10 @@ public class AdventureGame {
      */
     public boolean carry(String itemInput, Layout layout){
         Room current = getCurrentRoom(layout);
+        if(!current.areAllMonstersDefeated(layout)){
+            System.out.println("There are still monsters here; I can't take that.");
+            return false;
+        }
         boolean canCarry = false;
         ArrayList<Item> currentItems = current.getCurrentItems();
         if ( !currentItems.isEmpty()){
@@ -180,7 +185,9 @@ public class AdventureGame {
                 list();
             }else if (input.equalsIgnoreCase(STAY_COMMAND)){
                 System.out.println("You are supposed to finish your journey! Don't be lazy!");
-            }else {
+            }else if (input.equalsIgnoreCase(PLAY_INFO_COMMAND)){
+                layout.getPlayer().printPlayerInfo();
+            } else {
                 complain(input);
             }
             // the cases input line has more than one word:
@@ -196,7 +203,10 @@ public class AdventureGame {
                 carry(skipStart, layout);
             }else if (start.equalsIgnoreCase(DROP_COMMAND)){
                 drop(skipStart, layout);
-            }else {
+            }else if (start.equalsIgnoreCase(DUEL_COMMAND)){
+
+            }
+            else{
                 complain(input);
             }
         }
