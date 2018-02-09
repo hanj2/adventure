@@ -18,6 +18,7 @@ public class Room {
     public ArrayList<Item> droppedItems = new ArrayList<>();
     private String[] monstersInRoom;
     public boolean isVisited = false;
+    public ArrayList<Monster> defeatedMonsters = new ArrayList<>();
 
     public String getName(){
         return name;
@@ -187,7 +188,7 @@ public class Room {
             return areAllDefeated;
         }
         for (Monster monster : getMonsterList(layout)){
-            if (monster.getHealth() > 0){
+            if (monster.health > 0){
                 areAllDefeated = false;
             }
         }

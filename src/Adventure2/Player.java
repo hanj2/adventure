@@ -17,7 +17,7 @@ public class Player {
     public Double health;
     public Integer level = 0;
     public Boolean isInDuel = false;
-    public Integer experience = 0;
+    public Double experience = 0.0;
     public ArrayList<Item> takenItems = new ArrayList<>();
     public ArrayList<Item> droppedItems = new ArrayList<>();
 
@@ -55,6 +55,8 @@ public class Player {
         itemsOfPlayer.removeAll(droppedItems);
         return itemsOfPlayer;
     }
+
+    //print the player's information
     public void printPlayerInfo(){
         System.out.println("Player Information:");
         System.out.println("Level: " + this.level);
@@ -63,4 +65,13 @@ public class Player {
         System.out.println("Health: " + this.health);
     }
 
+    // a helper function to add gained experience value to the player
+    // return the new experience value
+    //2 and 20? I have no idea with those magic numbers; it's the formula in the requirement
+    public Double getNewExperience(Monster monster){
+        Double gainedExperience = ((monster.getAttack() + monster.getDefense())/ 2 + monster.health)* 20;
+        this.experience += gainedExperience;
+        return this.experience;
+    }
+    
 }
