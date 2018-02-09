@@ -103,12 +103,14 @@ public class Room {
     }
 
     // a method to print the current items in the room
-    public void printItemsInRoom(){
+    public int showItemsInRoom(){
+        int itemNum = 0;
         StringBuilder currentItems = new StringBuilder();
         ArrayList<Item> items = getCurrentItems();
         if (items == null || items.isEmpty()){
             currentItems.append("nothing");
         } else {
+            itemNum = items.size();
             for (int i = 0; i < items.size(); i++){
                 if (i == 0){
                     currentItems.append(items.get(i).getName());
@@ -118,6 +120,27 @@ public class Room {
             }
         }
         System.out.println("This room contains " + currentItems);
+        return itemNum;
+    }
+
+    //a method to show all monsters in the room
+    public int showMonstersInRoom(){
+        int monsterNum = 0;
+        StringBuilder monsters = new StringBuilder();
+        if (monstersInRoom == null || monstersInRoom.length == 0){
+            monsters.append("no monsters");
+        } else {
+            monsterNum = monstersInRoom.length;
+            for (int i = 0; i < monstersInRoom.length; i++){
+                if (i == 0){
+                    monsters.append(monstersInRoom[i]);
+                }else {
+                    monsters.append(", " + monstersInRoom[i]);
+                }
+            }
+        }
+        System.out.println("This room contains " + monsters);
+        return monsterNum;
     }
 
      // a method print all directions from the room

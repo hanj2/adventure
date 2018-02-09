@@ -262,7 +262,7 @@ public class AdventureGame {
             if (adventure.currentRoomName.equals(endingRoomName)){
                 break;
             }
-            current.printItemsInRoom();
+            current.showItemsInRoom();
             current.printDirectionFromRoom();
             adventure.read(scanner.nextLine(),layout);
         }
