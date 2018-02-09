@@ -161,7 +161,7 @@ public class Room {
 
     //a helper function to get the map of items
     public HashMap<String, Item> getMapOfItems(){
-        HashMap<String, Item> mapOfItems = new HashMap<String, Item>();
+        HashMap<String, Item> mapOfItems = new HashMap<>();
         for (Item item : getCurrentItems()){
             mapOfItems.put(item.getName(), item);
         }

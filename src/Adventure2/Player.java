@@ -35,5 +35,12 @@ public class Player {
         itemsOfPlayer.removeAll(droppedItems);
         return itemsOfPlayer;
     }
+    public void printPlayerInfo(){
+        System.out.println("Player Information:");
+        System.out.println("Level: " + this.level);
+        System.out.println("Attack: " + this.attack);
+        System.out.println("Defence: " + this.defense);
+        System.out.println("Health: " + this.health);
+    }
 
 }

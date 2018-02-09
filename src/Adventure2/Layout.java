@@ -40,6 +40,10 @@ public class Layout {
     public void setRooms (Room[] rooms){
         this.rooms = rooms;
     }
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
     public void setMonsters(Monster[] monsters) {
         this.monsters = monsters;
     }
@@ -86,7 +90,7 @@ public class Layout {
      * @param input input String
      * @throws InterruptedException throw the exception
      */
-    public void printVerbatim(String input) throws InterruptedException {
+    private void printVerbatim(String input) throws InterruptedException {
         for (int i = 0; i < input.length() - 1; i++ ){
             System.out.print(input.charAt(i));
             Thread.sleep(PAUSE_TIME_TO_SLEEP);
@@ -131,7 +135,7 @@ public class Layout {
         return isValid;
     }
     //a helper function to see if a room is to another room
-    public boolean isFloorPlanValidWrapper(String start, String end){
+    private boolean isFloorPlanValidWrapper(String start, String end){
         boolean isValid = false;
         Room current = getRoomByName(start);
         current.isVisited = true;
@@ -168,7 +172,7 @@ public class Layout {
     }
     //create a monster map to connect names and monster
     public HashMap<String, Monster> mapOfMonsters(){
-        HashMap<String, Monster> mapOfMonsters = new HashMap<String, Monster>();
+        HashMap<String, Monster> mapOfMonsters = new HashMap<>();
         for (Monster monster: monsters){
             mapOfMonsters.put(monster.getName(), monster);
         }
