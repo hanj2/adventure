@@ -73,5 +73,5 @@ public class Player {
         this.experience += gainedExperience;
         return this.experience;
     }
-    
+
 }

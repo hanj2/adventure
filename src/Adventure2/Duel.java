@@ -26,6 +26,7 @@ public class Duel {
             hasPlayerWon = true;
             room.defeatedMonsters.add(monster);
             player.getNewExperience(monster);
+            tryLevelUp(player);
             return hasPlayerWon;
 
         }
@@ -46,6 +47,7 @@ public class Duel {
             hasPlayerWon = true;
             room.defeatedMonsters.add(monster);
             player.getNewExperience(monster);
+            tryLevelUp(player);
             return hasPlayerWon;
 
         }
@@ -67,6 +69,9 @@ public class Duel {
         if (monster.health < 0){
             room.defeatedMonsters.add(monster);
             player.getNewExperience(monster);
+            tryLevelUp(player);
+            //regain the health points they lost
+            player.health += damage;
         }
         return damage;
     }
@@ -94,7 +99,7 @@ public class Duel {
     }
 
     //a helper function to get the levelUp-required experience value
-    public Double toLevelRequirement(Double toLevel){
+    public Double toLevelRequirement(Integer toLevel){
         if(toLevel == 1){
             return TO_LEVEL1_REQUIREMENT;
         }
@@ -104,9 +109,18 @@ public class Duel {
         return (toLevelRequirement(toLevel - 1) + toLevelRequirement(toLevel - 2)) * 1.1;
     }
 
-
-
-
+    //a helper function to see if the player can level up, if can, level up and return true; else: return false
+    public boolean tryLevelUp(Player player){
+        if (player.experience >= toLevelRequirement(player.level + 1)){
+            player.level += 1;
+            player.setAttack(player.getAttack() * 1.5);
+            player.setDefense(player.getDefense() *1.5);
+            player.health *= 1.3;
+            return true;
+        }else{
+            return false;
+        }
+    }
 
 
 }
