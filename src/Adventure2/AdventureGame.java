@@ -205,9 +205,10 @@ public class AdventureGame {
             }else if (start.equalsIgnoreCase(DROP_COMMAND)){
                 drop(skipStart, layout);
             }else if (start.equalsIgnoreCase(DUEL_COMMAND)){
+                AdventureGame adventureGame = new AdventureGame();
                 layout.getPlayer().isInDuel = true;
-
-
+                Duel duel = new Duel();
+                duel.duel(adventureGame,input);
             } else{
                 complain(input);
             }
