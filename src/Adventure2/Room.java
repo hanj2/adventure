@@ -152,6 +152,24 @@ public class Room {
         return monsterNum;
     }
 
+    //a method to show all monsters in the room
+    public int showDefeatedMonsters(){
+        int monsterNum = 0;
+        StringBuilder monsters = new StringBuilder();
+        if (!defeatedMonsters.isEmpty()){
+            monsterNum = defeatedMonsters.size();
+            for (int i = 0; i < defeatedMonsters.size(); i++){
+                if (i == 0){
+                    monsters.append(defeatedMonsters.get(i));
+                }else {
+                    monsters.append(", " + defeatedMonsters.get(i));
+                }
+            }
+        }
+        System.out.println("The defeated monster(s): " + monsters);
+        return monsterNum;
+    }
+
      // a method print all directions from the room
     public void printDirectionFromRoom(){
         StringBuilder directionNames = new StringBuilder();

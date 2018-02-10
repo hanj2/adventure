@@ -63,6 +63,10 @@ public class AdventureGame {
         boolean moved = false;
         Room current = getCurrentRoom(layout);
         Direction[] directions = current.getDirections();
+        if(!current.getCurrentMonsters(layout).isEmpty()){
+            System.out.println("There are still monsters here! I can't move.");
+            return moved;
+        }
         for (Direction validDirection : directions){
             if (validDirection.getDirectionName().equalsIgnoreCase(direction)){
                 moved = true;
@@ -195,6 +199,7 @@ public class AdventureGame {
             // starts with a "go",move to the next room if the direction input is valid
             // starts with a "take", carry the item if it is in the current room
             // starts with a "drop", check the rest words, drop the item if it is in the current carried items list
+            // starts with a "duel", they player will be in a duel
         }else {
             String start = readStartingWord(input);
             String skipStart = skipStartingWord(input);
@@ -276,6 +281,8 @@ public class AdventureGame {
                 break;
             }
             current.showItemsInRoom();
+            current.showMonstersInRoom(adventure.layout);
+            current.showDefeatedMonsters();
             current.printDirectionFromRoom();
             adventure.read(scanner.nextLine(),adventure.layout);
         }
