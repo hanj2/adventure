@@ -124,19 +124,27 @@ public class Room {
         return itemNum;
     }
 
+    // a method to get current monsters
+    public ArrayList<Monster> getCurrentMonsters(Layout layout) {
+        ArrayList<Monster> currentMonsters = new ArrayList<>();
+        currentMonsters.addAll(getMonsterList(layout));
+        currentMonsters.removeAll(defeatedMonsters);
+        return currentMonsters;
+    }
+
     //a method to show all monsters in the room
-    public int showMonstersInRoom(){
+    public int showMonstersInRoom(Layout layout){
         int monsterNum = 0;
         StringBuilder monsters = new StringBuilder();
-        if (monstersInRoom == null || monstersInRoom.length == 0){
+        if (getCurrentMonsters(layout).isEmpty()){
             monsters.append("no monsters");
         } else {
-            monsterNum = monstersInRoom.length;
-            for (int i = 0; i < monstersInRoom.length; i++){
+            monsterNum = getCurrentMonsters(layout).size();
+            for (int i = 0; i < monsterNum; i++){
                 if (i == 0){
-                    monsters.append(monstersInRoom[i]);
+                    monsters.append(getCurrentMonsters(layout).get(i));
                 }else {
-                    monsters.append(", " + monstersInRoom[i]);
+                    monsters.append(", " + getCurrentMonsters(layout).get(i));
                 }
             }
         }

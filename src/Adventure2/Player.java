@@ -10,6 +10,8 @@ import java.util.Arrays;
  * a list of taken items and a list of dropped items.
  */
 public class Player {
+    private static final Double TO_LEVEL1_REQUIREMENT = 25.0;
+    private static final Double TO_LEVEL2_REQUIREMENT = 50.0;
     private String name;
     private Item[] items;
     private Double attack;
@@ -72,6 +74,93 @@ public class Player {
         Double gainedExperience = ((monster.getAttack() + monster.getDefense())/ 2 + monster.health)* 20;
         this.experience += gainedExperience;
         return this.experience;
+    }
+
+    /**
+     * the method to attack a monster
+     * @param monster monster
+     * @return if the player wins, return true; if the player loses, return false; if the player dies, exit(1)
+     */
+    public boolean attack(Monster monster, Room room){
+        boolean hasPlayerWon = false;
+        Double damage = this.attack - monster.getDefense();
+        monster.health -= damage;
+        if (monster.health < 0){
+            hasPlayerWon = true;
+            room.defeatedMonsters.add(monster);
+            this.getNewExperience(monster);
+            tryLevelUp();
+            return hasPlayerWon;
+
+        }
+        damage = monster.getAttack() - this.defense;
+        this.health -= damage;
+        if (this.health < 0){
+            System.exit(1);
+        }
+        return hasPlayerWon;
+    }
+
+    //attack with an item
+    public boolean attackWithItem(Monster monster, Room room, Item item){
+        boolean hasPlayerWon = false;
+        Double damage = this.getAttack() + item.getDamage() - monster.getDefense();
+        monster.health -= damage;
+        if (monster.health < 0){
+            hasPlayerWon = true;
+            room.defeatedMonsters.add(monster);
+            this.getNewExperience(monster);
+            tryLevelUp();
+            return hasPlayerWon;
+
+        }
+        damage = monster.getAttack() - this.defense;
+        this.health -= damage;
+        if (this.health < 0){
+            System.exit(1);
+        }
+        return hasPlayerWon;
+    }
+
+    //the method to disengage, the play should exit the duel.
+    // return the damage add on both the player and the monster
+    public double disengage(Monster monster, Room room){
+        isInDuel = false;
+        double damage = this.attack - monster.getDefense();
+        this.health -= damage;
+        monster.health -= damage;
+        if (monster.health < 0){
+            room.defeatedMonsters.add(monster);
+            this.getNewExperience(monster);
+            tryLevelUp();
+            //regain the health points they lost
+            this.health += damage;
+        }
+        return damage;
+    }
+
+    //a helper function to get the levelUp-required experience value
+    public Double toLevelRequirement(Integer toLevel){
+        if(toLevel == 1){
+            return TO_LEVEL1_REQUIREMENT;
+        }
+        if (toLevel == 2){
+            return TO_LEVEL2_REQUIREMENT;
+        }
+        return (toLevelRequirement(toLevel - 1) + toLevelRequirement(toLevel - 2)) * 1.1;
+    }
+
+    //a helper function to see if the player can level up, if can, level up and return true; else: return false
+    public boolean tryLevelUp(){
+        if (experience >= toLevelRequirement(level + 1)){
+            level += 1;
+            attack *= 1.5;
+            defense *= 1.5;
+            health *= 1.3;
+            return true;
+        }else{
+            return false;
+        }
     }
 
 }
