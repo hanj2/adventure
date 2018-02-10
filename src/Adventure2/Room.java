@@ -177,10 +177,20 @@ public class Room {
         return mapOfItems;
     }
 
+    //a method to get the map of monsters
+    public HashMap<String, Monster> getMapOfMonsters(Layout layout){
+        HashMap<String, Monster> mapOfItems = new HashMap<>();
+        for (Monster monster : getCurrentMonsters(layout)){
+            mapOfItems.put(monster.getName(), monster);
+        }
+        return mapOfItems;
+    }
+
+
     // a helper function to get the monsterList in the room
     public ArrayList<Monster> getMonsterList(Layout layout){
         ArrayList<Monster> monsters = new ArrayList<>();
-        if (monstersInRoom == null || monstersInRoom.length == 0){
+        if (getCurrentMonsters(layout).isEmpty()){
             return monsters;
         }
         for (String monster : monstersInRoom){
@@ -202,4 +212,18 @@ public class Room {
         }
         return areAllDefeated;
     }
+
+    // a helper function to check is the monster in the room and not get defeated
+    public boolean isMonsterInRoom(String monsterName, Layout layout){
+        if (getCurrentMonsters(layout).isEmpty()){
+            return false;
+        }
+        for (Monster currentMonster : getCurrentMonsters(layout)){
+            if(currentMonster.getName().equalsIgnoreCase(monsterName)){
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

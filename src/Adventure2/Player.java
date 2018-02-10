@@ -2,6 +2,7 @@ package Adventure2;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 /**
  * Player in the game.
@@ -163,4 +164,25 @@ public class Player {
         }
     }
 
+    //a method to check if an item is on the player's hand
+    public boolean isItemInHand(String itemName){
+        if (getCurrentItemsOfPlayer().isEmpty()){
+            return false;
+        }
+        for (Item item : getCurrentItemsOfPlayer()){
+            if (item.getName().equalsIgnoreCase(itemName)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //a helper function to get the map of items of Player
+    public HashMap<String, Item> getMapOfItems(){
+        HashMap<String, Item> mapOfItems = new HashMap<>();
+        for (Item item : getCurrentItemsOfPlayer()){
+            mapOfItems.put(item.getName(), item);
+        }
+        return mapOfItems;
+    }
 }

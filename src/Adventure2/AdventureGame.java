@@ -10,16 +10,17 @@ public class AdventureGame {
     public final static String EXIT_COMMAND1 = "quit";
     public final static String EXIT_COMMAND2 = "exit";
     public final static String LIST_COMMAND = "list";
+    public final static String PLAY_INFO_COMMAND = "playerinfo";
     private final static String GO_COMMAND = "go";
     private final static String TAKE_COMMAND = "take";
     private final static String DROP_COMMAND = "drop";
     private final static String STAY_COMMAND = "stay";
-    private final static String PLAY_INFO_COMMAND = "playerinfo";
     private final static String DUEL_COMMAND = "duel";
 
     public boolean isRunning = false;
     public String currentRoomName;
     public ArrayList<String> currentCarriedItems = new ArrayList<>();
+    public Layout layout;
 
     /**
      * get the current room
@@ -204,9 +205,10 @@ public class AdventureGame {
             }else if (start.equalsIgnoreCase(DROP_COMMAND)){
                 drop(skipStart, layout);
             }else if (start.equalsIgnoreCase(DUEL_COMMAND)){
+                layout.getPlayer().isInDuel = true;
 
-            }
-            else{
+
+            } else{
                 complain(input);
             }
         }
@@ -254,27 +256,27 @@ public class AdventureGame {
 
         //get the layout of the game from the json file, start from the starting room
         //ensure the layout map is valid, which means there is a way from the starting room to the ending room
-        Layout layout = Load.getLayoutFromJson(JsonText);
-        if (!layout.isMapValid(layout.getStartingRoomName())){
+        adventure.layout = Load.getLayoutFromJson(JsonText);
+        if (!adventure.layout.isMapValid(adventure.layout.getStartingRoomName())){
             System.out.println("The layout JSON is not valid." +
                     "The endingRoom cannot be reached from the starting room.");
         }
 
         //start playing the game
-        adventure.currentRoomName = layout.getStartingRoomName();
-        String endingRoomName = layout.getEndingRoomName();
+        adventure.currentRoomName = adventure.layout.getStartingRoomName();
+        String endingRoomName = adventure.layout.getEndingRoomName();
         adventure.isRunning = true;
 
         //The game will continue until the user types the exit_command or enters the ending room
         while(adventure.isRunning) {
-            Room current = adventure.getCurrentRoom(layout);
-            layout.printCurrentDescription(adventure.currentRoomName);
+            Room current = adventure.getCurrentRoom(adventure.layout);
+            adventure.layout.printCurrentDescription(adventure.currentRoomName);
             if (adventure.currentRoomName.equals(endingRoomName)){
                 break;
             }
             current.showItemsInRoom();
             current.printDirectionFromRoom();
-            adventure.read(scanner.nextLine(),layout);
+            adventure.read(scanner.nextLine(),adventure.layout);
         }
         scanner.close();
     }
