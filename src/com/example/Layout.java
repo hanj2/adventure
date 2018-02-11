@@ -1,5 +1,7 @@
+package com.example;
+
 /**
- * Layout the game environment with a starting room, an ending room, and an array of Room objects.
+ * com.example.Layout the game environment with a starting room, an ending room, and an array of com.example.Room objects.
  */
 public class Layout{
     private final static int PAUSE_TIME_TO_SLEEP = 20;
@@ -16,6 +18,7 @@ public class Layout{
     public void setRooms (Room[] rooms){
         this.rooms = rooms;
     }
+
     public String getStartingRoomName(){
         return startingRoom;
     }
@@ -26,9 +29,10 @@ public class Layout{
         return rooms;
     }
 
+
     /**
      * method get the startingRoom Object
-     * @return the entire starting Room
+     * @return the entire starting com.example.Room
      */
     public Room searchStartingRoom(){
         for (Room room : rooms){
@@ -40,7 +44,7 @@ public class Layout{
     }
     /**
      * method get the endingRoom Object
-     * @return the entire ending Room
+     * @return the entire ending com.example.Room
      */
     public Room searchEndingRoom(){
         for (Room room : rooms){
@@ -51,9 +55,9 @@ public class Layout{
         return null;
     }
     /**
-     * search room by name, so that Room can be matched with name
+     * search room by name, so that com.example.Room can be matched with name
      * @param roomName name
-     * @return Room
+     * @return com.example.Room
      */
     public Room getRoomByName(String roomName){
         for (Room room : rooms){
@@ -93,7 +97,7 @@ public class Layout{
     }
 
     /**
-     * a method to test whether the starting room is to the ending Room
+     * a method to test whether the starting room is to the ending com.example.Room
      * @param start the starting room to search for
      * @return whether the layout is a valid map
      */

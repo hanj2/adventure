@@ -82,8 +82,7 @@ public class Duel {
     }
 
     //a method to read all commands while in duel
-    public void readDuelCommands(String command, Monster monster, AdventureGame adventure) {
-        Layout layout = adventure.layout;
+    public void readDuelCommands(String command, Monster monster, AdventureGame adventure, Layout layout) {
         Player player = layout.getPlayer();
         Room room = adventure.getCurrentRoom(layout);
         if (countInput(command) == 1) {
@@ -112,12 +111,7 @@ public class Duel {
             String second = readWordByIndex(command,1);
             String itemName = readFromIndexWord(command, ATTACK_WITH_COMMAND_LENGTH - 1);
             if (first.equalsIgnoreCase(ATTACK_COMMAND) && second.equalsIgnoreCase(ATTACK_WITH_COMMAND)){
-                Item item = player.getMapOfItems().get(itemName);
-                if (item == null){
-                    System.out.println("I can't attack with " + itemName);
-                }else {
-                    player.attackWithItem(monster,room,item);
-                }
+                player.attackWithItem(monster,room,itemName);
             }
         } else {
             adventure.complain(command);
@@ -125,23 +119,20 @@ public class Duel {
     }
 
     // the whole duel method
-    public boolean duel(AdventureGame adventure, String input){
+    public boolean duel(AdventureGame adventure, Layout layout, String input){
         Scanner scanner = new Scanner(System.in);
-        Layout layout = adventure.layout;
         Room current = adventure.getCurrentRoom(layout);
         Player player = layout.getPlayer();
         String monsterName = readFromIndexWord(input, 1);
-        Monster monster = adventure.getCurrentRoom(layout).getMapOfMonsters(layout).get(monsterName);
+        Monster monster = layout.mapOfMonsters().get(monsterName);
         if (monster == null){
             System.out.println("I can't duel" + monsterName);
             return false;
         }
         while (player.isInDuel){
             String command = scanner.nextLine();
-            readDuelCommands(command,monster,adventure);
+            readDuelCommands(command,monster,adventure,layout);
         }
         return true;
     }
-
-
 }

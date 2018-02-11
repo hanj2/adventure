@@ -20,7 +20,7 @@ public class AdventureGame {
     public boolean isRunning = false;
     public String currentRoomName;
     public ArrayList<String> currentCarriedItems = new ArrayList<>();
-    public Layout layout;
+//    public com.example.Layout layout;
 
     /**
      * get the current room
@@ -87,7 +87,7 @@ public class AdventureGame {
      */
     public boolean carry(String itemInput, Layout layout){
         Room current = getCurrentRoom(layout);
-        if(!current.areAllMonstersDefeated(layout)){
+        if(!current.getCurrentMonsters(layout).isEmpty()){
             System.out.println("There are still monsters here; I can't take that.");
             return false;
         }
@@ -213,7 +213,7 @@ public class AdventureGame {
                 AdventureGame adventureGame = new AdventureGame();
                 layout.getPlayer().isInDuel = true;
                 Duel duel = new Duel();
-                duel.duel(adventureGame,input);
+                duel.duel(adventureGame,layout,input);
             } else{
                 complain(input);
             }
@@ -227,7 +227,6 @@ public class AdventureGame {
         StringBuilder path = new StringBuilder();
         String filename;
         String JsonText;
-
         //get the alternative file path from the user
         // if the user didn't choose an alternative one, just use the default layout
         if (args.length > 0){
@@ -238,7 +237,7 @@ public class AdventureGame {
             JsonText = Load.getFileFromPath(path.toString(), filename);
             System.out.println("You have successfully chosen the local file.");
         }else {
-            JsonText = Load.loadSourceCode(URL_OF_DEFAULT);
+            JsonText = Load.getLocalFileContent("TestFile.json");
         }
 
         //if the input is a bad file, ask the user if he/her want to play the game with the default layout
@@ -251,7 +250,7 @@ public class AdventureGame {
             do {
                 input = scanner.nextLine();
                 if (input.equals("0")){
-                    JsonText = Load.loadSourceCode(URL_OF_DEFAULT);
+                    JsonText = Load.getLocalFileContent("TestFile.json");
                 }else if(input.equals("1")){
                     System.exit(0);
                 }else {
@@ -262,29 +261,32 @@ public class AdventureGame {
 
         //get the layout of the game from the json file, start from the starting room
         //ensure the layout map is valid, which means there is a way from the starting room to the ending room
-        adventure.layout = Load.getLayoutFromJson(JsonText);
-        if (!adventure.layout.isMapValid(adventure.layout.getStartingRoomName())){
+        Layout layout = Load.getLayoutFromJson(JsonText);
+
+        if (!layout.isMapValid(layout.getStartingRoomName())){
             System.out.println("The layout JSON is not valid." +
                     "The endingRoom cannot be reached from the starting room.");
+            System.exit(-1);
         }
 
         //start playing the game
-        adventure.currentRoomName = adventure.layout.getStartingRoomName();
-        String endingRoomName = adventure.layout.getEndingRoomName();
+        adventure.currentRoomName = layout.getStartingRoomName();
+        String endingRoomName = layout.getEndingRoomName();
         adventure.isRunning = true;
+        Room current = layout.searchStartingRoom();
 
         //The game will continue until the user types the exit_command or enters the ending room
         while(adventure.isRunning) {
-            Room current = adventure.getCurrentRoom(adventure.layout);
-            adventure.layout.printCurrentDescription(adventure.currentRoomName);
+//            current = adventure.getCurrentRoom(layout);
+            layout.printCurrentDescription(adventure.currentRoomName);
             if (adventure.currentRoomName.equals(endingRoomName)){
                 break;
             }
             current.showItemsInRoom();
-            current.showMonstersInRoom(adventure.layout);
+            current.showMonstersInRoom(layout);
             current.showDefeatedMonsters();
             current.printDirectionFromRoom();
-            adventure.read(scanner.nextLine(),adventure.layout);
+            adventure.read(scanner.nextLine(),layout);
         }
         scanner.close();
     }

@@ -1,7 +1,7 @@
 package Adventure2;
 
 /**
- * Direction has the direction name and the name of the room the direction is point to.
+ * com.example.Direction has the direction name and the name of the room the direction is point to.
  */
 public class Direction {
     private String directionName;

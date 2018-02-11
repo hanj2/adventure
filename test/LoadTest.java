@@ -1,3 +1,6 @@
+import com.example.AdventureGame;
+import com.example.Layout;
+import com.example.Load;
 import com.google.gson.Gson;
 import org.junit.Before;
 import org.junit.Test;

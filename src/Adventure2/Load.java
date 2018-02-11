@@ -35,7 +35,7 @@ public class Load {
      * @return the layout of the game
      */
     public static Layout getLayoutFromJson(String inputJson){
-        Gson gson  = new Gson();
+        Gson gson = new Gson();
         return gson.fromJson(inputJson, Layout.class);
     }
     /**

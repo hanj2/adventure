@@ -1,8 +1,10 @@
+package com.example;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * a class Room that has the name of room, the description of the room,
+ * a class com.example.Room that has the name of room, the description of the room,
  * the items in the room, and the direction it points to.
  */
 @SuppressWarnings("ALL")

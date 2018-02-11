@@ -1,10 +1,9 @@
 package Adventure2;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Layout the game environment with a starting room, an ending room, and an array of Room objects.
+ * com.example.Layout the game environment with a starting room, an ending room, and an array of com.example.Room objects.
  */
 public class Layout {
     private final static int PAUSE_TIME_TO_SLEEP = 20;
@@ -13,7 +12,6 @@ public class Layout {
     private Room[] rooms;
     private Player player;
     private Monster[] monsters;
-    public ArrayList<Player> players;
 
     public String getStartingRoomName(){
         return startingRoom;
@@ -43,14 +41,13 @@ public class Layout {
     public void setPlayer(Player player) {
         this.player = player;
     }
-
     public void setMonsters(Monster[] monsters) {
         this.monsters = monsters;
     }
 
     /**
      * method get the startingRoom Object
-     * @return the entire starting Room
+     * @return the entire starting com.example.Room
      */
     public Room searchStartingRoom(){
         for (Room room : rooms){
@@ -62,7 +59,7 @@ public class Layout {
     }
     /**
      * method get the endingRoom Object
-     * @return the entire ending Room
+     * @return the entire ending com.example.Room
      */
     public Room searchEndingRoom(){
         for (Room room : rooms){
@@ -73,9 +70,9 @@ public class Layout {
         return null;
     }
     /**
-     * search room by name, so that Room can be matched with name
+     * search room by name, so that com.example.Room can be matched with name
      * @param roomName name
-     * @return Room
+     * @return com.example.Room
      */
     public Room getRoomByName(String roomName){
         for (Room room : rooms){
@@ -103,8 +100,11 @@ public class Layout {
      * @param currentRoomName name of the current room
      * @throws InterruptedException no interruption
      */
-    public void printCurrentDescription(String currentRoomName) throws InterruptedException {
+    public void printCurrentDescription(String currentRoomName) throws InterruptedException, NullPointerException {
         Room current  = getRoomByName(currentRoomName);
+        if (current == null){
+            return;
+        }
         printVerbatim(current.getDescription());
         if (currentRoomName.equals(startingRoom)){
             System.out.println("Your journey begins here");
@@ -115,13 +115,14 @@ public class Layout {
     }
 
     /**
-     * a method to test whether the starting room is to the ending Room
+     * a method to test whether the starting room is to the ending com.example.Room
      * @param start the starting room to search for
      * @return whether the layout is a valid map
      */
-    public boolean isMapValid(String start){
+    public boolean isMapValid(String start) throws  NullPointerException{
         boolean isValid = false;
         Room current = getRoomByName(start);
+
         current.isVisited = true;
         Direction[] directions = current.getDirections();
         for (Direction direction : directions){
@@ -138,6 +139,9 @@ public class Layout {
     private boolean isFloorPlanValidWrapper(String start, String end){
         boolean isValid = false;
         Room current = getRoomByName(start);
+        if (current == null){
+            return isValid;
+        }
         current.isVisited = true;
         Direction[] directions = current.getDirections();
         for (Direction direction : directions){
@@ -155,7 +159,7 @@ public class Layout {
      * @return whether the layout is floor plan valid
      *  if there is a pair of rooms that is not a floor plan (with a exclusive or testing), return false
      */
-    public boolean isFloorPlanValid(){
+    public boolean isFloorPlanValid() throws NullPointerException{
         boolean isValid = true;
         for (int i = 0; i < this.rooms.length; i++){
             for (int j = 0; j < this.rooms.length; j++){
@@ -171,8 +175,11 @@ public class Layout {
         return isValid;
     }
     //create a monster map to connect names and monster
-    public HashMap<String, Monster> mapOfMonsters(){
+    public HashMap<String, Monster> mapOfMonsters() throws NullPointerException {
         HashMap<String, Monster> mapOfMonsters = new HashMap<>();
+        if (monsters == null || monsters.length == 0){
+            return mapOfMonsters;
+        }
         for (Monster monster: monsters){
             mapOfMonsters.put(monster.getName(), monster);
         }
