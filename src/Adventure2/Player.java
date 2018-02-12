@@ -147,18 +147,16 @@ public class Player {
         isInDuel = false;
         double damage = this.attack - monster.getDefense();
         this.health -= damage;
-        Double expectedHealth = monster.health - damage;
         if (this.health < 0){
             System.out.println(this.name + " ,you are killed by " + monster.getName());
             System.exit(1);
         }
+        Double expectedHealth = monster.health - damage;
         if (expectedHealth < 0){
             this.getNewExperience(monster);
             monster.health = expectedHealth;
             room.defeatedMonsters.add(monster);
             tryLevelUp();
-            //regain the health points they lost
-            this.health += damage;
         }
         return damage;
     }

@@ -78,5 +78,10 @@ public class PlayerTest {
         assertEquals(-0.7, monster.health , ERROR_RANGE);
         assertEquals(13, player.experience, ERROR_RANGE);
     }
-
+    @Test
+    public void testDisengage(){
+        Monster monster = current.getCurrentMonsters(layout).get(0);
+        assertEquals(0.7, player.disengage(monster, current), ERROR_RANGE);
+        assertEquals(0.2, player.health, ERROR_RANGE);
+    }
 }
