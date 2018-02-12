@@ -6,10 +6,11 @@ import java.util.Scanner;
  * Duel class stored duel methods and duel commands.
  */
 public class Duel {
-    private static final String ATTACK_COMMAND = "attack";
-    private static final String ATTACK_WITH_COMMAND = "with";
-    private static final String DISENGAGE_COMMAND = "disengage";
-    private static final String STATUS_COMMAND = "status";
+    public static final String ATTACK_COMMAND = "attack";
+    public static final String ATTACK_WITH_COMMAND = "with";
+    public static final String DISENGAGE_COMMAND = "disengage";
+    public static final String STATUS_COMMAND = "status";
+    public static final String COMPLAIN_TO_USER = "INVALID";
     private static final int ATTACK_WITH_COMMAND_LENGTH = 3;
     private static final int PERCENTAGE_INT = 100;
 
@@ -33,9 +34,9 @@ public class Duel {
         System.out.println("Player: " + playerBar);
         System.out.println("Monster: " + monsterBar);
     }
-    //a method to count the number of words in an input line
+    //a method to count the number of words in an input line (must be separated by single space)
     public int countInput(String line) {
-        if (line.equals("") || line.equals("\n")) {
+        if (line == null || line.equals("") || line.equals("\n")) {
             return 0;
         }
         String[] words = line.split(" ");
@@ -76,45 +77,51 @@ public class Duel {
             return line.substring(wordsLength + 1);
         }
     }
+
     //a method to read all commands while in duel
-    public void readDuelCommands(String command, Monster monster, AdventureGame adventure, Layout layout) {
+    public String readDuelCommands(String command, Monster monster, AdventureGame adventure, Layout layout) {
         Player player = layout.getPlayer();
         Room room = adventure.getCurrentRoom(layout);
         if (countInput(command) == 1) {
             switch (command.toLowerCase()) {
                 case AdventureGame.EXIT_COMMAND1:
                     System.exit(0);
-                    break;
+                    return AdventureGame.EXIT_COMMAND1;
                 case AdventureGame.EXIT_COMMAND2:
                     System.exit(0);
-                    break;
+                    return AdventureGame.EXIT_COMMAND2;
                 case ATTACK_COMMAND:
                     player.attack(monster, room);
-                    break;
+                    return ATTACK_COMMAND;
                 case DISENGAGE_COMMAND:
                     player.disengage(monster, room);
-                    break;
+                    return DISENGAGE_COMMAND;
                 case STATUS_COMMAND:
                     showStatus(player, monster);
-                    break;
+                    return STATUS_COMMAND;
                 case AdventureGame.PLAY_INFO_COMMAND:
                     player.printPlayerInfo();
-                    break;
+                    return AdventureGame.PLAY_INFO_COMMAND;
                 case AdventureGame.LIST_COMMAND:
                     adventure.list();
-                    break;
+                    return AdventureGame.LIST_COMMAND;
             }
+            return COMPLAIN_TO_USER;
+
         } else if (countInput(command) >= ATTACK_WITH_COMMAND_LENGTH) {
             String first = readWordByIndex(command,0);
             String second = readWordByIndex(command,1);
             String itemName = readFromIndexWord(command, ATTACK_WITH_COMMAND_LENGTH - 1);
             if (first.equalsIgnoreCase(ATTACK_COMMAND) && second.equalsIgnoreCase(ATTACK_WITH_COMMAND)){
                 player.attackWithItem(monster,room,itemName);
+                return ATTACK_WITH_COMMAND;
             }else {
                 adventure.complain(command);
+                return COMPLAIN_TO_USER;
             }
         } else {
             adventure.complain(command);
+            return COMPLAIN_TO_USER;
         }
     }
 
