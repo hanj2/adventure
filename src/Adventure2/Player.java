@@ -118,7 +118,7 @@ public class Player {
             System.exit(1);
             isInDuel = false;
         }
-        System.out.println("You are defeated by " + monster.getName() + "!");
+        System.out.println("Have another try with " + monster.getName() + "!");
         return false;
     }
 
@@ -153,7 +153,7 @@ public class Player {
             System.exit(1);
             isInDuel = false;
         }
-        System.out.println("You are defeated by " + monster.getName() + "!");
+        System.out.println("Have another try with " + monster.getName() + "!");
         return false;
     }
 
@@ -178,6 +178,7 @@ public class Player {
             tryLevelUp();
         }
         isInDuel = false;
+        System.out.println("You disengage with the duel with " + monster.getName());
         return damage;
     }
 
@@ -195,6 +196,7 @@ public class Player {
     //a helper function to see if the player can level up, if can, level up and return true; else: return false
     public boolean tryLevelUp(){
         if (experience >= toLevelRequirement(level + 1)){
+            System.out.println("Now you get one level up!");
             level += 1;
             attack *= 1.5;
             defense *= 1.5;
