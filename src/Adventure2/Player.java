@@ -99,10 +99,12 @@ public class Player {
         Double damage = this.attack - monster.getDefense();
         Double expectedHealth = monster.health - damage;
         if (expectedHealth < 0){
+            System.out.println("Congratulations! You have defeated " + monster.getName());
             this.experience += getNewExperience(monster);
             monster.health = expectedHealth;
             room.defeatedMonsters.add(monster);
             this.tryLevelUp();
+            isInDuel = false;
             return true;
         }
         monster.health = expectedHealth;
@@ -111,6 +113,7 @@ public class Player {
         if (this.health < 0){
             System.out.println(this.name + " ,you are killed by " + monster.getName());
             System.exit(1);
+            isInDuel = false;
         }
         return false;
     }
@@ -119,16 +122,19 @@ public class Player {
     public boolean attackWithItem(Monster monster, Room room, String itemName) throws IllegalArgumentException {
         if ( !isItemInHand(itemName)){
             System.out.println("I can't attack with " + itemName);
+            isInDuel = false;
             return false;
         }
         Item item = getMapOfItems().get(itemName);
         Double damage = this.getAttack() + item.getDamage() - monster.getDefense();
         Double expectedHealth = monster.health - damage;
         if (expectedHealth < 0){
+            System.out.println("Congratulations! You have defeated " + monster.getName());
             experience = experience + getNewExperience(monster);
             monster.health = expectedHealth;
             room.defeatedMonsters.add(monster);
             tryLevelUp();
+            isInDuel = false;
             return true;
         }
         monster.health = expectedHealth;
@@ -137,6 +143,7 @@ public class Player {
         if (this.health < 0){
             System.out.println(this.name + " ,you are killed by " + monster.getName());
             System.exit(1);
+            isInDuel = false;
         }
         return false;
     }
@@ -153,11 +160,13 @@ public class Player {
         }
         Double expectedHealth = monster.health - damage;
         if (expectedHealth < 0){
+            System.out.println("Congratulations! "+ monster.getName() + "is DEAD!");
             this.getNewExperience(monster);
             monster.health = expectedHealth;
             room.defeatedMonsters.add(monster);
             tryLevelUp();
         }
+        isInDuel = false;
         return damage;
     }
 
