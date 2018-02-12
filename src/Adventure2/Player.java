@@ -196,4 +196,74 @@ public class Player {
         }
         return mapOfItems;
     }
+
+    /**
+     * a function that list all the carrying items
+     */
+    public void list(){
+        StringBuilder carryingList = new StringBuilder();
+        if (getCurrentItemsOfPlayer().size() == 0){
+            carryingList.append("nothing");
+        } else {
+            for (int i = 0; i < getCurrentItemsOfPlayer().size(); i++) {
+                if (i == 0) {
+                    carryingList.append(getCurrentItemsOfPlayer().get(i).getName());
+                } else {
+                    carryingList.append(" ," + getCurrentItemsOfPlayer().get(i).getName());
+                }
+            }
+        }
+        System.out.println("You are carrying " + carryingList);
+    }
+    /**
+     * method to carry an item
+     * @param itemInput item to carry
+     * @param layout layout of the game
+     */
+    public boolean carry(String itemInput, Layout layout, Room current){
+        if(!current.getCurrentMonsters(layout).isEmpty()){
+            System.out.println("There are still monsters here; I can't take that.");
+            return false;
+        }
+        boolean canCarry = false;
+        ArrayList<Item> currentItems = current.getCurrentItems();
+        if ( !currentItems.isEmpty()){
+            for (Item currentItem : currentItems){
+                if (currentItem.getName().equalsIgnoreCase(itemInput)){
+                    canCarry = true;
+                }
+            }
+        }
+        if (canCarry) {
+            takenItems.add(current.getMapOfItems().get(itemInput));
+            current.takenItems.add(current.getMapOfItems().get(itemInput));
+        } else {
+            System.out.println("I can't carry " + itemInput);
+        }
+        return canCarry;
+    }
+    /**
+     * method to drop an item
+     * @param itemInput item to drop
+     * @param layout the layout of the game
+     */
+    public boolean drop(String itemInput, Layout layout, Room current){
+        boolean canDrop = false;
+        if (!getCurrentItemsOfPlayer().isEmpty()) {
+            for (Item item : getCurrentItemsOfPlayer()) {
+                if (item.getName().equalsIgnoreCase(itemInput)) {
+                    canDrop = true;
+                    break;
+                }
+            }
+        }
+        if (canDrop) {
+            droppedItems.add(getMapOfItems().get(itemInput));
+            current.droppedItems.add(current.getMapOfItems().get(itemInput));
+        } else {
+            System.out.println("I can't drop " + itemInput);
+        }
+        return canDrop;
+    }
+
 }

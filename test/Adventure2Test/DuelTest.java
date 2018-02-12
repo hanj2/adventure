@@ -54,10 +54,10 @@ public class DuelTest {
     }
     @Test
     public void testReadDuelCommands(){
-
-
+        Monster monster = room.getCurrentMonsters(layout).get(0);
+        assertEquals(Duel.COMPLAIN_TO_USER, duel.readDuelCommands("lalala",monster,room,layout));
+        assertEquals(Duel.ATTACK_COMMAND, duel.readDuelCommands("ATTAck",monster,room,layout));
+        assertEquals(Duel.ATTACK_WITH_COMMAND, duel.readDuelCommands("ATTAck with lightsaber",monster,room,layout));
+        assertEquals(Duel.ATTACK_WITH_COMMAND, duel.readDuelCommands("attack with anakin's lightsaber",monster, room, layout));
     }
-
-
-
 }

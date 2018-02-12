@@ -1,5 +1,6 @@
 package Adventure2;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -78,10 +79,14 @@ public class Duel {
         }
     }
 
+    // method to complain invalid input if the user type in an invalid command
+    public void complain(String inValidInput){
+        System.out.println("I don't understand " + "'" + inValidInput + "'");
+    }
+
     //a method to read all commands while in duel
-    public String readDuelCommands(String command, Monster monster, AdventureGame adventure, Layout layout) {
+    public String readDuelCommands(String command, Monster monster, Room room, Layout layout) {
         Player player = layout.getPlayer();
-        Room room = adventure.getCurrentRoom(layout);
         if (countInput(command) == 1) {
             switch (command.toLowerCase()) {
                 case AdventureGame.EXIT_COMMAND1:
@@ -103,7 +108,7 @@ public class Duel {
                     player.printPlayerInfo();
                     return AdventureGame.PLAY_INFO_COMMAND;
                 case AdventureGame.LIST_COMMAND:
-                    adventure.list();
+                    player.list();
                     return AdventureGame.LIST_COMMAND;
             }
             return COMPLAIN_TO_USER;
@@ -116,31 +121,40 @@ public class Duel {
                 player.attackWithItem(monster,room,itemName);
                 return ATTACK_WITH_COMMAND;
             }else {
-                adventure.complain(command);
+                complain(command);
                 return COMPLAIN_TO_USER;
             }
         } else {
-            adventure.complain(command);
+            complain(command);
             return COMPLAIN_TO_USER;
         }
     }
 
     // the whole duel method
-    public boolean duel(AdventureGame adventure, Layout layout, String input){
-        Scanner scanner = new Scanner(System.in);
-        Room current = adventure.getCurrentRoom(layout);
+    public boolean duel(Room current, Layout layout, String monsterName){
         Player player = layout.getPlayer();
-        String monsterName = readFromIndexWord(input, 1);
-        Monster monster = layout.mapOfMonsters().get(monsterName);
-        if (monster == null){
-            System.out.println("I can't duel" + monsterName);
-            return false;
+        ArrayList<Monster> monstersInRoom = current.getCurrentMonsters(layout);
+        boolean canDuel = false;
+        Monster monster = null;
+        if (monstersInRoom != null && !monstersInRoom.isEmpty()) {
+            for (Monster monsterInRoom : monstersInRoom){
+                if (monsterInRoom.getName().equalsIgnoreCase(monsterName)){
+                    monster = monsterInRoom;
+                    canDuel = true;
+                }
+            }
         }
-        System.out.println("Now you are in duel with " + monsterName);
+        if (canDuel) {
+            layout.getPlayer().isInDuel = true;
+            System.out.println("Now you are in duel with " + monsterName);
+        }else {
+            System.out.println("I can't duel " + monsterName);
+        }
         while (player.isInDuel){
+            Scanner scanner = new Scanner(System.in);
             String command = scanner.nextLine();
-            readDuelCommands(command,monster,adventure,layout);
+            readDuelCommands(command,monster,current,layout);
         }
-        return true;
+        return player.isInDuel;
     }
 }

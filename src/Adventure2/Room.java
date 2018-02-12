@@ -131,7 +131,7 @@ public class Room {
                 }
             }
         }
-        System.out.println("Monsters in this room " + monsters);
+        System.out.println("Monsters in this room: " + monsters);
         return monsterNum;
     }
 

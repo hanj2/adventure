@@ -38,24 +38,6 @@ public class AdventureGame {
         System.out.println("I don't understand " + "'" + inValidInput + "'");
     }
     /**
-     * a function that list all the carrying items
-     */
-    public void list(){
-        StringBuilder carryingList = new StringBuilder();
-        if (currentCarriedItems.size() == 0){
-            carryingList.append("nothing");
-        } else {
-            for (int i = 0; i < currentCarriedItems.size(); i++) {
-                if (i == 0) {
-                    carryingList.append(currentCarriedItems.get(i));
-                } else {
-                    carryingList.append(" ," + currentCarriedItems.get(i));
-                }
-            }
-        }
-        System.out.println("You are carrying " + carryingList);
-    }
-    /**
      * a method to move to the next room, change the static variable currentRoomName
      * @param direction input direction
      */
@@ -79,58 +61,6 @@ public class AdventureGame {
             System.out.println("I can't go " + direction);
         }
         return moved;
-    }
-    /**
-     * method to carry an item
-     * @param itemInput item to carry
-     * @param layout layout of the game
-     */
-    public boolean carry(String itemInput, Layout layout){
-        Room current = getCurrentRoom(layout);
-        if(!current.getCurrentMonsters(layout).isEmpty()){
-            System.out.println("There are still monsters here; I can't take that.");
-            return false;
-        }
-        boolean canCarry = false;
-        ArrayList<Item> currentItems = current.getCurrentItems();
-        if ( !currentItems.isEmpty()){
-            for (Item currentItem : currentItems){
-                if (currentItem.getName().equalsIgnoreCase(itemInput)){
-                    canCarry = true;
-                }
-            }
-        }
-        if (canCarry) {
-            currentCarriedItems.add(itemInput);
-            current.takenItems.add(current.getMapOfItems().get(itemInput));
-        } else {
-            System.out.println("I can't carry " + itemInput);
-        }
-        return canCarry;
-    }
-    /**
-     * method to drop an item
-     * @param itemInput item to drop
-     * @param layout the layout of the game
-     */
-    public boolean drop(String itemInput, Layout layout){
-        boolean canDrop = false;
-        Room current = getCurrentRoom(layout);
-        if ( !currentCarriedItems.isEmpty()) {
-            for (String item : currentCarriedItems) {
-                if (item.equalsIgnoreCase(itemInput)) {
-                    canDrop = true;
-                    break;
-                }
-            }
-        }
-        if (canDrop) {
-            currentCarriedItems.remove(itemInput);
-            current.droppedItems.add(current.getMapOfItems().get(itemInput));
-        } else {
-            System.out.println("I can't drop " + itemInput);
-        }
-        return canDrop;
     }
     /**
      * a method to count the number of words in an input line
@@ -176,6 +106,8 @@ public class AdventureGame {
      * @param input the input
      */
     public void read(String input, Layout layout){
+        Player player = layout.getPlayer();
+        Room current = getCurrentRoom(layout);
         int inputLength = countInput(input);
         //if the input is just a "\n", let the user to enter again
         if (inputLength == 0){
@@ -187,7 +119,7 @@ public class AdventureGame {
             if (input.equalsIgnoreCase(EXIT_COMMAND1) || input.equalsIgnoreCase(EXIT_COMMAND2)){
                 System.exit(0);
             }else if (input.equalsIgnoreCase(LIST_COMMAND)) {
-                list();
+                player.list();
             }else if (input.equalsIgnoreCase(STAY_COMMAND)){
                 System.out.println("You are supposed to finish your journey! Don't be lazy!");
             }else if (input.equalsIgnoreCase(PLAY_INFO_COMMAND)){
@@ -206,14 +138,12 @@ public class AdventureGame {
             if (start.equalsIgnoreCase(GO_COMMAND)){
                 move(skipStart, layout);
             }else if (start.equalsIgnoreCase(TAKE_COMMAND)){
-                carry(skipStart, layout);
+                player.carry(skipStart, layout, current);
             }else if (start.equalsIgnoreCase(DROP_COMMAND)){
-                drop(skipStart, layout);
+                player.drop(skipStart, layout, current);
             }else if (start.equalsIgnoreCase(DUEL_COMMAND)){
-                AdventureGame adventureGame = new AdventureGame();
-                layout.getPlayer().isInDuel = true;
                 Duel duel = new Duel();
-                duel.duel(adventureGame,layout,input);
+                duel.duel(getCurrentRoom(layout),layout,skipStart);
             } else{
                 complain(input);
             }
