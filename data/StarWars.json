@@ -1,0 +1,208 @@
+{
+  "startingRoom":"Tatooine",
+  "endingRoom":"DeathStar",
+  "monsters":[
+    {
+      "name":"sandman",
+      "attack": 0.2,
+      "defense": 0.1,
+      "health":0.2
+    },
+    {
+      "name":"Palpatine",
+      "attack": 0.6,
+      "defense": 0.3,
+      "health":0.2
+    },
+    {
+      "name":"Darth Vader",
+      "attack": 0.6,
+      "defense": 0.4,
+      "health":0.5
+    },
+    {
+      "name":"Evil Robot",
+      "attack": 0.7,
+      "defense": 0.7,
+      "health":0.9
+    },
+    {
+      "name":"Cyberman",
+      "attack": 0.85,
+      "defense": 0.5,
+      "health":0.75
+    },
+    {
+      "name":"Dalek",
+      "attack": 0.5,
+      "defense": 0.5,
+      "health":0.55
+    },
+    {
+      "name": "CS173 Examlet",
+      "attack":0.9,
+      "defense": 0.3,
+      "health": 0.9
+    },
+    {
+      "name": "Kylo Ren",
+      "attack": 0.97,
+      "defense": 0.34,
+      "health":0.55
+    }
+  ],
+  "player":{
+    "name":"Luke Skywalker",
+    "items":[
+      {
+        "name":"lightsaber",
+        "damage":0.4
+      },
+      {
+        "name":"examletOf173",
+        "damage":0.1
+      }
+    ],
+    "attack":0.8,
+    "defense":0.8,
+    "health":0.9,
+    "level":0
+  },
+  "rooms":[
+    {
+      "name":"Tatooine",
+      "description":"You are on Tatooine, a sparsely inhabited circumbinary desert planet located in the galaxy's Outer Rim Territories.",
+      "items":[
+        {
+          "name":"sand",
+          "damage":0.25
+        }
+      ],
+      "directions":[
+        {
+          "directionName":"East",
+          "room":"Millennium Falcon"
+        }
+      ],
+      "monstersInRoom": ["sandman"]
+    },
+    {
+      "name":"Millennium Falcon",
+      "description":"You are on Millennium Falcon, the spaceship of Captain Solo. In your opinion, it's just a piece of garbage. However, this is the spaceship that brings you the opportunity to see the outside world. ",
+      "items":[
+        {
+          "name":"MauserC96",
+          "damage":0.75
+        },
+        {
+          "name":"bowcaster",
+          "damage":0.47
+        }
+      ],
+      "directions":[
+        {
+          "directionName":"West",
+          "room":"Tatooine"
+        },
+        {
+          "directionName":"Northeast",
+          "room":"Naboo"
+        },
+        {
+          "directionName":"North",
+          "room":"SpaceBar"
+        },
+        {
+          "directionName":"East",
+          "room":"Alderaan"
+        }
+      ],
+      "monstersInRoom": []
+    },
+    {
+      "name":"Naboo",
+      "description":"You are on Naboo, a beautiful planet.",
+      "items":[
+        {
+          "name":"fruit",
+          "damage":0.20
+        }
+      ],
+      "directions":[
+        {
+          "directionName":"Southwest",
+          "room":"Millennium Falcon"
+        }
+      ],
+      "monstersInRoom":["Palpatine", "Darth Vader"]
+    },
+    {
+      "name":"SpaceBar",
+      "description":"You are in a Space bar far far away. Han always shots first",
+      "directions":[
+        {
+          "directionName":"South",
+          "room":"Millennium Falcon"
+        },
+        {
+          "directionName":"NorthEast",
+          "room":"Jedi Temple's ruins"
+        }
+      ],
+      "monstersInRoom":["Evil Robot"]
+    },
+    {
+      "name":"Jedi Temple's ruins",
+      "description":"You are in Jedi Temple's ruins.  There was space for padawans' trainning but now everything is gone",
+      "items":[
+        {
+          "name":"stone",
+          "damage":0.20
+        },
+        {
+          "name":"book",
+          "damage":0.12
+        }
+      ],
+      "directions":[
+        {
+          "directionName":"Southwest",
+          "room":"SpaceBar"
+        }
+      ],
+      "monstersInRoom":["Cyberman", "CS173 Examlet"]
+    },
+    {
+      "name":"Alderaan",
+      "description":"You are on Alderaan, hometown of your twin sister Leia. ",
+      "items":[
+        {
+          "name":"bomb",
+          "damage":0.34
+        }
+      ],
+      "directions":[
+        {
+          "directionName":"West",
+          "room":"Millennium Falcon"
+        },
+        {
+          "directionName":"South",
+          "room":"DeathStar"
+        }
+      ],
+      "monstersInRoom": ["Dalek", "Kylo Ren"]
+    },
+    {
+      "name":"DeathStar",
+      "description":"You are on the Death Star. Darth Vader tells you he is your father and you have to face your destiny, finally. ",
+      "directions":[
+        {
+          "directionName":"North",
+          "room":"Alderaan"
+        }
+      ],
+      "monstersInRoom": []
+    }
+  ]
+}
