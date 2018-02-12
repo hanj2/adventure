@@ -80,6 +80,7 @@ public class Player {
         System.out.println("Attack: " + this.attack);
         System.out.println("Defence: " + this.defense);
         System.out.println("Health: " + this.health);
+        System.out.println("Experience: " + this.experience);
     }
 
     // a helper function to add gained experience value to the player

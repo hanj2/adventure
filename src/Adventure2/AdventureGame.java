@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class AdventureGame {
-    private final static String URL_OF_DEFAULT = "https://courses.engr.illinois.edu/cs126/sp2018/adventure/siebel.json";
+    private final static String URL_OF_DEFAULT = "https://api.myjson.com/bins/u526d";
     //all valid commands
     public final static String EXIT_COMMAND1 = "quit";
     public final static String EXIT_COMMAND2 = "exit";
@@ -155,7 +155,8 @@ public class AdventureGame {
         Scanner scanner = new Scanner(System.in);
         StringBuilder path = new StringBuilder();
         String filename;
-        String JsonText;
+        String JsonText = null;
+
         //get the alternative file path from the user
         // if the user didn't choose an alternative one, just use the default layout
         if (args.length > 0){
@@ -164,22 +165,34 @@ public class AdventureGame {
             }
             filename = args[args.length - 1];
             JsonText = Load.getFileFromPath(path.toString(), filename);
-            System.out.println("You have successfully chosen the local file.");
         }else {
-            JsonText = Load.getLocalFileContent("StarWars.json");
+            System.out.println("Do you want to play with a specific layout? Please enter the url.");
+            System.out.println("0: Default layout; 1:I will choose a specific url.");
+            String input;
+            do {
+                input = scanner.nextLine();
+                if (input.equals("0")){
+                    JsonText = Load.loadSourceCode(URL_OF_DEFAULT);
+                }else if(input.equals("1")){
+                    System.out.println("Please enter your json url.");
+                    JsonText = Load.loadSourceCode(scanner.nextLine());
+                }else {
+                    System.out.println("Please Enter either 0 or 1!");
+                }
+            }while ( !input.equals("0") && !input.equals("1"));
         }
 
         //if the input is a bad file, ask the user if he/her want to play the game with the default layout
         //the input must be either 0:YES or 1:NO
         //if the user choose yes, the program will just load the default layout; if no, the program will stop.
         if (JsonText == null){
-            System.out.println("File not found! Do you want to use the default layout in your adventure game?");
+            System.out.println("Json Not Found! Do you want to use the default layout in your adventure game?");
             System.out.println("Please enter one number: 0.YES; 1.NO.");
             String input;
             do {
                 input = scanner.nextLine();
                 if (input.equals("0")){
-                    JsonText = Load.getLocalFileContent("StarWars.json");
+                    JsonText = Load.loadSourceCode(URL_OF_DEFAULT);
                 }else if(input.equals("1")){
                     System.exit(0);
                 }else {
@@ -187,6 +200,8 @@ public class AdventureGame {
                 }
             }while ( !input.equals("0") && !input.equals("1"));
         }
+        System.out.println("You have successfully chosen your layout in json file.");
+        System.out.println();
 
         //get the layout of the game from the json file, start from the starting room
         //ensure the layout map is valid, which means there is a way from the starting room to the ending room
