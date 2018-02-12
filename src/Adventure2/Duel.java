@@ -26,7 +26,6 @@ public class Duel {
         }
         return statusBar.toString();
     }
-
     //the method to show the player and the monsters' statues in bar charts
     public void showStatus(Player player, Monster monster) {
         String playerBar = getStatusBarChart(player.health);
@@ -34,7 +33,6 @@ public class Duel {
         System.out.println("Player: " + playerBar);
         System.out.println("Monster: " + monsterBar);
     }
-
     //a method to count the number of words in an input line
     public int countInput(String line) {
         if (line.equals("") || line.equals("\n")) {
@@ -43,7 +41,6 @@ public class Duel {
         String[] words = line.split(" ");
         return words.length;
     }
-
     //helper function to read the starting word, index is the index of array of words
     public String readWordByIndex(String line, int index) {
         if (line == null || index < 0) {
@@ -58,7 +55,6 @@ public class Duel {
         }
         return words[index].replaceAll(" ", "");
     }
-
     /**
      * a function that read from a specific word of the reader's input line
      *
@@ -80,7 +76,6 @@ public class Duel {
             return line.substring(wordsLength + 1);
         }
     }
-
     //a method to read all commands while in duel
     public void readDuelCommands(String command, Monster monster, AdventureGame adventure, Layout layout) {
         Player player = layout.getPlayer();
@@ -89,9 +84,12 @@ public class Duel {
             switch (command.toLowerCase()) {
                 case AdventureGame.EXIT_COMMAND1:
                     System.exit(0);
+                    break;
                 case AdventureGame.EXIT_COMMAND2:
                     System.exit(0);
+                    break;
                 case ATTACK_COMMAND:
+                    player.attack(monster, room);
                     break;
                 case DISENGAGE_COMMAND:
                     player.disengage(monster, room);
@@ -106,12 +104,14 @@ public class Duel {
                     adventure.list();
                     break;
             }
-        } else if (countInput(command) == ATTACK_WITH_COMMAND_LENGTH) {
+        } else if (countInput(command) >= ATTACK_WITH_COMMAND_LENGTH) {
             String first = readWordByIndex(command,0);
             String second = readWordByIndex(command,1);
             String itemName = readFromIndexWord(command, ATTACK_WITH_COMMAND_LENGTH - 1);
             if (first.equalsIgnoreCase(ATTACK_COMMAND) && second.equalsIgnoreCase(ATTACK_WITH_COMMAND)){
                 player.attackWithItem(monster,room,itemName);
+            }else {
+                adventure.complain(command);
             }
         } else {
             adventure.complain(command);
@@ -129,6 +129,7 @@ public class Duel {
             System.out.println("I can't duel" + monsterName);
             return false;
         }
+        System.out.println("Now you are in duel with " + monsterName);
         while (player.isInDuel){
             String command = scanner.nextLine();
             readDuelCommands(command,monster,adventure,layout);

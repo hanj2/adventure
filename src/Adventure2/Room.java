@@ -93,7 +93,7 @@ public class Room {
                 }
             }
         }
-        System.out.println("This room contains " + currentItems);
+        System.out.println("Items in this room: " + currentItems);
         return itemNum;
     }
 
@@ -125,13 +125,13 @@ public class Room {
             monsterNum = getCurrentMonsters(layout).size();
             for (int i = 0; i < monsterNum; i++){
                 if (i == 0){
-                    monsters.append(getCurrentMonsters(layout).get(i));
+                    monsters.append(getCurrentMonsters(layout).get(i).getName());
                 }else {
-                    monsters.append(", " + getCurrentMonsters(layout).get(i));
+                    monsters.append(", " + getCurrentMonsters(layout).get(i).getName());
                 }
             }
         }
-        System.out.println("This room contains " + monsters);
+        System.out.println("Monsters in this room " + monsters);
         return monsterNum;
     }
 
@@ -143,13 +143,14 @@ public class Room {
             monsterNum = defeatedMonsters.size();
             for (int i = 0; i < defeatedMonsters.size(); i++){
                 if (i == 0){
-                    monsters.append(defeatedMonsters.get(i));
+                    monsters.append(defeatedMonsters.get(i).getName());
                 }else {
-                    monsters.append(", " + defeatedMonsters.get(i));
+                    monsters.append(", " + defeatedMonsters.get(i).getName());
                 }
             }
+            System.out.println("The defeated monster(s): " + monsters);
         }
-        System.out.println("The defeated monster(s): " + monsters);
+
         return monsterNum;
     }
 

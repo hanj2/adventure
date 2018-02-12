@@ -237,7 +237,7 @@ public class AdventureGame {
             JsonText = Load.getFileFromPath(path.toString(), filename);
             System.out.println("You have successfully chosen the local file.");
         }else {
-            JsonText = Load.getLocalFileContent("TestFile.json");
+            JsonText = Load.getLocalFileContent("StarWars.json");
         }
 
         //if the input is a bad file, ask the user if he/her want to play the game with the default layout
@@ -250,7 +250,7 @@ public class AdventureGame {
             do {
                 input = scanner.nextLine();
                 if (input.equals("0")){
-                    JsonText = Load.getLocalFileContent("TestFile.json");
+                    JsonText = Load.getLocalFileContent("StarWars.json");
                 }else if(input.equals("1")){
                     System.exit(0);
                 }else {
@@ -277,7 +277,6 @@ public class AdventureGame {
 
         //The game will continue until the user types the exit_command or enters the ending room
         while(adventure.isRunning) {
-//            current = adventure.getCurrentRoom(layout);
             layout.printCurrentDescription(adventure.currentRoomName);
             if (adventure.currentRoomName.equals(endingRoomName)){
                 break;

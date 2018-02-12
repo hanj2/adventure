@@ -51,12 +51,26 @@ public class Player {
 
     public ArrayList<Item> getCurrentItemsOfPlayer(){
         ArrayList<Item> itemsOfPlayer = new ArrayList<>();
-        if (items != null) {
-            itemsOfPlayer.add((Item) Arrays.asList(this.items));
+        if (items == null || items.length == 0){
+            return itemsOfPlayer;
         }
+        itemsOfPlayer.addAll(Arrays.asList(this.items));
         itemsOfPlayer.addAll(takenItems);
         itemsOfPlayer.removeAll(droppedItems);
         return itemsOfPlayer;
+    }
+
+    //a method to check if an item is on the player's hand
+    public boolean isItemInHand(String itemName) throws IllegalArgumentException{
+        if (getCurrentItemsOfPlayer().isEmpty()){
+            return false;
+        }
+        for (Item item : getCurrentItemsOfPlayer()){
+            if (item.getName().equalsIgnoreCase(itemName)){
+                return true;
+            }
+        }
+        return false;
     }
 
     //print the player's information
@@ -71,10 +85,9 @@ public class Player {
     // a helper function to add gained experience value to the player
     // return the new experience value
     //2 and 20? I have no idea with those magic numbers; it's the formula in the requirement
-    public Double getNewExperience(Monster monster){
-        Double gainedExperience = ((monster.getAttack() + monster.getDefense())/ 2 + monster.health)* 20;
-        this.experience += gainedExperience;
-        return this.experience;
+    public double getNewExperience(Monster monster){
+        double gainedExperience = ((monster.getAttack() + monster.getDefense())/ 2 + monster.health)* 20;
+        return gainedExperience;
     }
 
     /**
@@ -83,48 +96,49 @@ public class Player {
      * @return if the player wins, return true; if the player loses, return false; if the player dies, exit(1)
      */
     public boolean attack(Monster monster, Room room) throws IllegalArgumentException{
-        boolean hasPlayerWon = false;
         Double damage = this.attack - monster.getDefense();
-        monster.health -= damage;
-        if (monster.health < 0){
-            hasPlayerWon = true;
+        Double expectedHealth = monster.health - damage;
+        if (expectedHealth < 0){
+            this.experience += getNewExperience(monster);
+            monster.health = expectedHealth;
             room.defeatedMonsters.add(monster);
-            this.getNewExperience(monster);
-            tryLevelUp();
-            return hasPlayerWon;
-
+            this.tryLevelUp();
+            return true;
         }
+        monster.health = expectedHealth;
         damage = monster.getAttack() - this.defense;
         this.health -= damage;
         if (this.health < 0){
+            System.out.println(this.name + " ,you are killed by " + monster.getName());
             System.exit(1);
         }
-        return hasPlayerWon;
+        return false;
     }
 
     //attack with an item
     public boolean attackWithItem(Monster monster, Room room, String itemName) throws IllegalArgumentException {
-        boolean hasPlayerWon = false;
-        Item item = room.getMapOfItems().get(itemName);
-        if (item == null){
+        if ( !isItemInHand(itemName)){
             System.out.println("I can't attack with " + itemName);
-            return hasPlayerWon;
+            return false;
         }
+        Item item = getMapOfItems().get(itemName);
         Double damage = this.getAttack() + item.getDamage() - monster.getDefense();
-        monster.health -= damage;
-        if (monster.health < 0){
-            hasPlayerWon = true;
+        Double expectedHealth = monster.health - damage;
+        if (expectedHealth < 0){
+            experience = experience + getNewExperience(monster);
+            monster.health = expectedHealth;
             room.defeatedMonsters.add(monster);
-            this.getNewExperience(monster);
             tryLevelUp();
-            return hasPlayerWon;
+            return true;
         }
+        monster.health = expectedHealth;
         damage = monster.getAttack() - this.defense;
         this.health -= damage;
         if (this.health < 0){
+            System.out.println(this.name + " ,you are killed by " + monster.getName());
             System.exit(1);
         }
-        return hasPlayerWon;
+        return false;
     }
 
     //the method to disengage, the play should exit the duel.
@@ -133,10 +147,15 @@ public class Player {
         isInDuel = false;
         double damage = this.attack - monster.getDefense();
         this.health -= damage;
-        monster.health -= damage;
-        if (monster.health < 0){
-            room.defeatedMonsters.add(monster);
+        Double expectedHealth = monster.health - damage;
+        if (this.health < 0){
+            System.out.println(this.name + " ,you are killed by " + monster.getName());
+            System.exit(1);
+        }
+        if (expectedHealth < 0){
             this.getNewExperience(monster);
+            monster.health = expectedHealth;
+            room.defeatedMonsters.add(monster);
             tryLevelUp();
             //regain the health points they lost
             this.health += damage;
@@ -166,19 +185,6 @@ public class Player {
         }else{
             return false;
         }
-    }
-
-    //a method to check if an item is on the player's hand
-    public boolean isItemInHand(String itemName) throws IllegalArgumentException{
-        if (getCurrentItemsOfPlayer().isEmpty()){
-            return false;
-        }
-        for (Item item : getCurrentItemsOfPlayer()){
-            if (item.getName().equalsIgnoreCase(itemName)){
-                return true;
-            }
-        }
-        return false;
     }
 
     //a helper function to get the map of items of Player
