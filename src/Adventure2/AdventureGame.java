@@ -1,7 +1,6 @@
 package Adventure2;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class AdventureGame {
@@ -19,8 +18,6 @@ public class AdventureGame {
 
     public boolean isRunning = false;
     public String currentRoomName;
-    public ArrayList<String> currentCarriedItems = new ArrayList<>();
-//    public com.example.Layout layout;
 
     /**
      * get the current room
@@ -49,14 +46,16 @@ public class AdventureGame {
             System.out.println("There are still monsters here! I can't move.");
             return moved;
         }
+        Direction next = null;
         for (Direction validDirection : directions){
             if (validDirection.getDirectionName().equalsIgnoreCase(direction)){
                 moved = true;
+                next = validDirection;
                 break;
             }
         }
         if (moved) {
-            currentRoomName = current.toNextRoom(direction);
+            currentRoomName = next.getRoom();
         } else {
             System.out.println("I can't go " + direction);
         }
@@ -203,11 +202,10 @@ public class AdventureGame {
         adventure.currentRoomName = layout.getStartingRoomName();
         String endingRoomName = layout.getEndingRoomName();
         adventure.isRunning = true;
-        Room current = layout.searchStartingRoom();
-
         //The game will continue until the user types the exit_command or enters the ending room
         while(adventure.isRunning) {
-            layout.printCurrentDescription(adventure.currentRoomName);
+            Room current = layout.getRoomByName(adventure.currentRoomName);
+            layout.printCurrentDescription(current.getName());
             if (adventure.currentRoomName.equals(endingRoomName)){
                 break;
             }

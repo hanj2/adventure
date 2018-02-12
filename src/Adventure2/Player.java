@@ -97,9 +97,11 @@ public class Player {
      */
     public boolean attack(Monster monster, Room room) throws IllegalArgumentException{
         Double damage = this.attack - monster.getDefense();
+        System.out.println("You attack "+ monster.getName() + " with a damage of " + damage + "!!" );
         Double expectedHealth = monster.health - damage;
         if (expectedHealth < 0){
             System.out.println("Congratulations! You have defeated " + monster.getName());
+            System.out.println("You gained " +  getNewExperience(monster) + " experience points!!");
             this.experience += getNewExperience(monster);
             monster.health = expectedHealth;
             room.defeatedMonsters.add(monster);
@@ -109,17 +111,20 @@ public class Player {
         }
         monster.health = expectedHealth;
         damage = monster.getAttack() - this.defense;
+        System.out.println(monster.getName() +" attack you with a damage of " + damage + "!!" );
         this.health -= damage;
         if (this.health < 0){
             System.out.println(this.name + " ,you are killed by " + monster.getName());
             System.exit(1);
             isInDuel = false;
         }
+        System.out.println("You are defeated by " + monster.getName() + "!");
         return false;
     }
 
     //attack with an item
     public boolean attackWithItem(Monster monster, Room room, String itemName) throws IllegalArgumentException {
+        itemName = itemName.replace(" " ,"");
         if ( !isItemInHand(itemName)){
             System.out.println("I can't attack with " + itemName);
             isInDuel = false;
@@ -128,9 +133,11 @@ public class Player {
         Item item = getMapOfItems().get(itemName);
         Double damage = this.getAttack() + item.getDamage() - monster.getDefense();
         Double expectedHealth = monster.health - damage;
+        System.out.println("You attack "+ monster.getName() + " with a damage of " + damage + "!!" );
         if (expectedHealth < 0){
             System.out.println("Congratulations! You have defeated " + monster.getName());
             experience = experience + getNewExperience(monster);
+            System.out.println("You gained " +  getNewExperience(monster) + " experience points!!");
             monster.health = expectedHealth;
             room.defeatedMonsters.add(monster);
             tryLevelUp();
@@ -140,11 +147,13 @@ public class Player {
         monster.health = expectedHealth;
         damage = monster.getAttack() - this.defense;
         this.health -= damage;
+        System.out.println(monster.getName() +" attack you with a damage of " + damage + "!!" );
         if (this.health < 0){
-            System.out.println(this.name + " ,you are killed by " + monster.getName());
+            System.out.println(this.name + ", you are killed by " + monster.getName());
             System.exit(1);
             isInDuel = false;
         }
+        System.out.println("You are defeated by " + monster.getName() + "!");
         return false;
     }
 
@@ -153,14 +162,16 @@ public class Player {
     public double disengage(Monster monster, Room room) throws IllegalArgumentException{
         isInDuel = false;
         double damage = this.attack - monster.getDefense();
+        System.out.println("You get a damage of " + damage + "!!" );
+        Double expectedHealth = monster.health - damage;
+        System.out.println(monster.getName() + " gets a damage of " + damage + "!");
         this.health -= damage;
         if (this.health < 0){
             System.out.println(this.name + " ,you are killed by " + monster.getName());
             System.exit(1);
         }
-        Double expectedHealth = monster.health - damage;
         if (expectedHealth < 0){
-            System.out.println("Congratulations! "+ monster.getName() + "is DEAD!");
+            System.out.println("Congratulations! "+ monster.getName() + " is DEAD!");
             this.getNewExperience(monster);
             monster.health = expectedHealth;
             room.defeatedMonsters.add(monster);
