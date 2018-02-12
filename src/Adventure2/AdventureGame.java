@@ -217,5 +217,5 @@ public class AdventureGame {
         }
         scanner.close();
     }
-    
+
 }
