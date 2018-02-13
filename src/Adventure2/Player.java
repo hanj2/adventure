@@ -250,39 +250,40 @@ public class Player {
         }
         boolean canCarry = false;
         ArrayList<Item> currentItems = current.getCurrentItems();
+        Item takenItem = null;
         if ( !currentItems.isEmpty()){
             for (Item currentItem : currentItems){
                 if (currentItem.getName().equalsIgnoreCase(itemInput)){
                     canCarry = true;
+                    takenItem = currentItem;
                 }
             }
         }
-        if (canCarry) {
-            takenItems.add(current.getMapOfItems().get(itemInput));
-            current.takenItems.add(current.getMapOfItems().get(itemInput));
+        if (takenItem!= null) {
+            takenItems.add(takenItem);
+            current.takenItems.add(takenItem);
         } else {
             System.out.println("I can't carry " + itemInput);
         }
         return canCarry;
     }
-    /**
-     * method to drop an item
-     * @param itemInput item to drop
-     * @param layout the layout of the game
-     */
-    public boolean drop(String itemInput, Layout layout, Room current){
+
+     // method to drop an item
+    public boolean drop(String itemInput, Room current){
         boolean canDrop = false;
+        Item droppedItem = null;
         if (!getCurrentItemsOfPlayer().isEmpty()) {
             for (Item item : getCurrentItemsOfPlayer()) {
                 if (item.getName().equalsIgnoreCase(itemInput)) {
                     canDrop = true;
+                    droppedItem = item;
                     break;
                 }
             }
         }
-        if (canDrop) {
-            droppedItems.add(getMapOfItems().get(itemInput));
-            current.droppedItems.add(current.getMapOfItems().get(itemInput));
+        if (canDrop && droppedItem != null) {
+            droppedItems.add(droppedItem);
+            current.droppedItems.add(droppedItem);
         } else {
             System.out.println("I can't drop " + itemInput);
         }

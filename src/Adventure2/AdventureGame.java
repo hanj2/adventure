@@ -139,7 +139,7 @@ public class AdventureGame {
             }else if (start.equalsIgnoreCase(TAKE_COMMAND)){
                 player.carry(skipStart, layout, current);
             }else if (start.equalsIgnoreCase(DROP_COMMAND)){
-                player.drop(skipStart, layout, current);
+                player.drop(skipStart, current);
             }else if (start.equalsIgnoreCase(DUEL_COMMAND)){
                 Duel duel = new Duel();
                 duel.duel(getCurrentRoom(layout),layout,skipStart);
