@@ -10,7 +10,6 @@ import static org.junit.Assert.assertEquals;
 public class DuelTest {
     private final static String JSON_FILE = Load.getLocalFileContent("StarWars.json");
     private final static Double ERROR_RANGE = 0.0001;
-    private AdventureGame adventure;
     private Layout layout;
     Player player;
     Room room;
@@ -18,12 +17,10 @@ public class DuelTest {
 
     @Before
     public void setUp(){
-        adventure = new AdventureGame();
         Gson gson = new Gson();
         layout = gson.fromJson(JSON_FILE, Layout.class);
+        room = layout.searchStartingRoom();
         player = layout.getPlayer();
-        adventure.currentRoomName =layout.getStartingRoomName();
-        room = adventure.getCurrentRoom(layout);
         duel = new Duel();
     }
     @Test
