@@ -131,7 +131,7 @@ public class Duel {
     }
 
     // the whole duel method
-    public void duel(Room current, Layout layout, String monsterName){
+    public void readDuelCommand(Room current, Layout layout, String monsterName){
         Player player = layout.getPlayer();
         ArrayList<Monster> monstersInRoom = current.getCurrentMonsters(layout);
         boolean canDuel = false;
