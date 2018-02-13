@@ -23,6 +23,7 @@ public class Player {
     public Double experience = 0.0;
     public ArrayList<Item> takenItems = new ArrayList<>();
     public ArrayList<Item> droppedItems = new ArrayList<>();
+    public ArrayList<String> visitedRoutine = new ArrayList<>();
 
     public String getName() {
         return name;
@@ -220,9 +221,7 @@ public class Player {
         return mapOfItems;
     }
 
-    /**
-     * a function that list all the carrying items
-     */
+    // a function that list all the carrying items
     public void list(){
         StringBuilder carryingList = new StringBuilder();
         if (getCurrentItemsOfPlayer().size() == 0){
@@ -238,11 +237,9 @@ public class Player {
         }
         System.out.println("You are carrying " + carryingList);
     }
-    /**
-     * method to carry an item
-     * @param itemInput item to carry
-     * @param layout layout of the game
-     */
+
+    // method to carry an item in the room ,
+    // if there are still monsters in the room then the item cannot be taken
     public boolean carry(String itemInput, Layout layout, Room current){
         if(!current.getCurrentMonsters(layout).isEmpty()){
             System.out.println("There are still monsters here; I can't take that.");
@@ -288,6 +285,19 @@ public class Player {
             System.out.println("I can't drop " + itemInput);
         }
         return canDrop;
+    }
+
+    //method to show the routine of all rooms the player have visited since the adventure begins
+    public String getRoutine(){
+        if (visitedRoutine.isEmpty()){
+            return ("You are still in the starting room!");
+        }
+        StringBuilder routine = new StringBuilder("Routine: ");
+        for (int i = 0; i < visitedRoutine.size()-1; i++){
+            routine.append(visitedRoutine.get(i) + " --> ");
+        }
+        routine.append(visitedRoutine.get(visitedRoutine.size()-1) + ".");
+        return routine.toString();
     }
 
 }

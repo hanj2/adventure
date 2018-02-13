@@ -15,6 +15,7 @@ public class AdventureGame {
     private final static String DROP_COMMAND = "drop";
     private final static String STAY_COMMAND = "stay";
     private final static String DUEL_COMMAND = "duel";
+    private final static String ROUTINE_COMMAND = "routine";
 
     public boolean isRunning = false;
     public String currentRoomName;
@@ -36,6 +37,7 @@ public class AdventureGame {
     }
     /**
      * a method to move to the next room, change the static variable currentRoomName
+     * add the current room name to the visitedRoutine arrayList in player class
      * @param direction input direction
      */
     public boolean move(String direction, Layout layout){
@@ -50,6 +52,7 @@ public class AdventureGame {
         for (Direction validDirection : directions){
             if (validDirection.getDirectionName().equalsIgnoreCase(direction)){
                 moved = true;
+                layout.getPlayer().visitedRoutine.add(currentRoomName);
                 next = validDirection;
                 break;
             }
@@ -121,8 +124,10 @@ public class AdventureGame {
                 player.list();
             }else if (input.equalsIgnoreCase(STAY_COMMAND)){
                 System.out.println("You are supposed to finish your journey! Don't be lazy!");
-            }else if (input.equalsIgnoreCase(PLAY_INFO_COMMAND)){
+            }else if (input.equalsIgnoreCase(PLAY_INFO_COMMAND)) {
                 layout.getPlayer().printPlayerInfo();
+            } else if (input.equalsIgnoreCase(ROUTINE_COMMAND)){
+                System.out.println(player.getRoutine());
             } else {
                 complain(input);
             }
