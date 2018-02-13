@@ -76,7 +76,7 @@ public class Player {
 
     //print the player's information
     public void printPlayerInfo(){
-        System.out.println("Player Information:");
+        System.out.println("Player Information:" + Visualization.PLAYER_IMAGE);
         System.out.println("Level: " + this.level);
         System.out.println("Attack: " + this.attack);
         System.out.println("Defence: " + this.defense);
@@ -99,9 +99,11 @@ public class Player {
      */
     public boolean attack(Monster monster, Room room) throws IllegalArgumentException{
         Double damage = this.attack - monster.getDefense();
+        System.out.println(Visualization.ATTACK_IMAGE);
         System.out.println("You attack "+ monster.getName() + " with a damage of " + damage + "!!" );
         Double expectedHealth = monster.health - damage;
         if (expectedHealth < 0){
+            System.out.println(Visualization.MONSTER_IS_DEAD_IMAGE);
             System.out.println("Congratulations! You have defeated " + monster.getName());
             System.out.println("You gained " +  getNewExperience(monster) + " experience points!!");
             this.experience += getNewExperience(monster);
@@ -113,13 +115,16 @@ public class Player {
         }
         monster.health = expectedHealth;
         damage = monster.getAttack() - this.defense;
+        System.out.println(Visualization.MONSTER_ATTACK_IMAGE);
         System.out.println(monster.getName() +" attack you with a damage of " + damage + "!!" );
         this.health -= damage;
         if (this.health < 0){
+            System.out.println(Visualization.PLAYER_IS_DEAD_IMAGE);
             System.out.println(this.name + " ,you are killed by " + monster.getName());
             System.exit(1);
             isInDuel = false;
         }
+        System.out.println(Visualization.TRY_AGAIN_IMAGE);
         System.out.println("Have another try with " + monster.getName() + "!");
         return false;
     }
@@ -135,8 +140,10 @@ public class Player {
         Item item = getMapOfItems().get(itemName);
         Double damage = this.getAttack() + item.getDamage() - monster.getDefense();
         Double expectedHealth = monster.health - damage;
+        System.out.println(Visualization.ATTACK_WITH_IMAGE);
         System.out.println("You attack "+ monster.getName() + " with a damage of " + damage + "!!" );
         if (expectedHealth < 0){
+            System.out.println(Visualization.MONSTER_IS_DEAD_IMAGE);
             System.out.println("Congratulations! You have defeated " + monster.getName());
             experience = experience + getNewExperience(monster);
             System.out.println("You gained " +  getNewExperience(monster) + " experience points!!");
@@ -149,12 +156,15 @@ public class Player {
         monster.health = expectedHealth;
         damage = monster.getAttack() - this.defense;
         this.health -= damage;
+        System.out.println(Visualization.MONSTER_ATTACK_IMAGE);
         System.out.println(monster.getName() +" attack you with a damage of " + damage + "!!" );
         if (this.health < 0){
+            System.out.println(Visualization.PLAYER_IS_DEAD_IMAGE);
             System.out.println(this.name + ", you are killed by " + monster.getName());
             System.exit(1);
             isInDuel = false;
         }
+        System.out.println(Visualization.TRY_AGAIN_IMAGE);
         System.out.println("Have another try with " + monster.getName() + "!");
         return false;
     }
@@ -164,15 +174,18 @@ public class Player {
     public double disengage(Monster monster, Room room) throws IllegalArgumentException{
         isInDuel = false;
         double damage = this.attack - monster.getDefense();
+        System.out.println(Visualization.ESCAPE_IMAGE);
         System.out.println("You get a damage of " + damage + "!!" );
         Double expectedHealth = monster.health - damage;
         System.out.println(monster.getName() + " gets a damage of " + damage + "!");
         this.health -= damage;
         if (this.health < 0){
+            System.out.println(Visualization.PLAYER_IS_DEAD_IMAGE);
             System.out.println(this.name + " ,you are killed by " + monster.getName());
             System.exit(1);
         }
         if (expectedHealth < 0){
+            System.out.println(Visualization.MONSTER_ATTACK_IMAGE);
             System.out.println("Congratulations! "+ monster.getName() + " is DEAD!");
             this.getNewExperience(monster);
             monster.health = expectedHealth;
@@ -198,6 +211,7 @@ public class Player {
     //a helper function to see if the player can level up, if can, level up and return true; else: return false
     public boolean tryLevelUp(){
         if (experience >= toLevelRequirement(level + 1)){
+            System.out.println(Visualization.LEVEL_UP_IMAGE);
             System.out.println("Now you get one level up!");
             level += 1;
             attack *= 1.5;
