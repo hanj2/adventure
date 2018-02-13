@@ -84,4 +84,19 @@ public class PlayerTest {
         assertEquals(0.7, player.disengage(monster, current), ERROR_RANGE);
         assertEquals(0.2, player.health, ERROR_RANGE);
     }
+    @Test
+    public void testDrop(){
+        assertTrue(player.drop("lightsaber",current));
+        assertEquals("lightsaber", current.droppedItems.get(0).getName());
+        assertFalse(player.isItemInHand("lightsaber"));
+    }
+    @Test
+    public void testTake(){
+        Room room = layout.getRoomByName("Naboo");
+        assertFalse(player.carry("fruit", layout, room));
+        Room room2 = layout.getRoomByName("Millennium Falcon");
+        assertTrue(player.carry("MauserC96", layout, room2));
+        player.isItemInHand("MauserC96");
+    }
+
 }
