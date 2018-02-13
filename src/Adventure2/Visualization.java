@@ -1,5 +1,8 @@
 package Adventure2;
 
+/**
+ * a class that stores all image data.
+ */
 public class Visualization {
     public static final String PLAYER_IMAGE = "┌(｡・ω･)┘ - Adventure Time!";
     public static final String ATTACK_IMAGE = "（‵□′）＞───Ｃε（┬＿┬）３";

@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 /**
  * a class com.example.Room that has the name of room, the description of the room,
- * the items in the room, and the direction it points to.
+ * the items in the room, the monsters in the room, and the direction it points to.
  */
 public class Room {
     private String name;
@@ -78,6 +78,7 @@ public class Room {
     }
 
     // a method to print the current items in the room
+    //return the number of the items
     public int showItemsInRoom(){
         int itemNum = 0;
         StringBuilder currentItems = new StringBuilder();
@@ -117,6 +118,7 @@ public class Room {
     }
 
     //a method to show all monsters in the room
+    //return the total number of current monsters
     public int showMonstersInRoom(Layout layout){
         int monsterNum = 0;
         StringBuilder monsters = new StringBuilder();
@@ -136,7 +138,7 @@ public class Room {
         return monsterNum;
     }
 
-    //a method to show all monsters in the room
+    //a method to show all defeated monsters in the room
     public int showDefeatedMonsters(){
         int monsterNum = 0;
         StringBuilder monsters = new StringBuilder();
