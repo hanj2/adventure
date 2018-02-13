@@ -17,6 +17,7 @@ public class Room {
     public boolean isVisited = false;
     private String[] monstersInRoom;
     public ArrayList<Monster> defeatedMonsters = new ArrayList<>();
+    public int visitedTimes = 0;
 
     public String getName(){
         return name;

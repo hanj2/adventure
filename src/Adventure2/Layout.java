@@ -106,11 +106,17 @@ public class Layout {
             return;
         }
         printVerbatim(current.getDescription());
+        if (current.visitedTimes > 0 & current.visitedTimes !=1 ){
+            printVerbatim("You have visited " + currentRoomName + " " + current.visitedTimes + " times!");
+        }
+        if (current.visitedTimes ==1 ){
+            printVerbatim("You have visited " + currentRoomName + " once!");
+        }
         if (currentRoomName.equals(startingRoom)){
-            System.out.println("Your journey begins here");
+            printVerbatim("Your journey begins here");
         }
         if (currentRoomName.equals(endingRoom)){
-            System.out.println("You have reached your final destination");
+            printVerbatim("You have reached your final destination");
         }
     }
 

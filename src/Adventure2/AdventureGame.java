@@ -53,6 +53,7 @@ public class AdventureGame {
             if (validDirection.getDirectionName().equalsIgnoreCase(direction)){
                 moved = true;
                 layout.getPlayer().visitedRoutine.add(currentRoomName);
+                current.visitedTimes += 1;
                 next = validDirection;
                 break;
             }
