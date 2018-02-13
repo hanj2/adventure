@@ -228,14 +228,13 @@ public class Player {
             carryingList.append("nothing");
         } else {
             for (int i = 0; i < getCurrentItemsOfPlayer().size(); i++) {
-                if (i == 0) {
-                    carryingList.append(getCurrentItemsOfPlayer().get(i).getName());
-                } else {
-                    carryingList.append(" ," + getCurrentItemsOfPlayer().get(i).getName());
-                }
+                Item item = getCurrentItemsOfPlayer().get(i);
+                Double damage = item.getDamage();
+                carryingList.append(item.getName() + ": " + damage + "\n");
             }
         }
-        System.out.println("You are carrying " + carryingList);
+        System.out.println("You are carrying;");
+        System.out.println(carryingList);
     }
 
     // method to carry an item in the room ,
