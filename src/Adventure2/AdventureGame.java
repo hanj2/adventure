@@ -119,6 +119,7 @@ public class AdventureGame {
             // the cases input line has just one word:
             // "quit" or "exit", stop the program; "list", list all the items the user is carrying
             //  "stay", do nothing but tell the user don't be lazy
+            // "routine", show the player the routine they have gone through
             if (input.equalsIgnoreCase(EXIT_COMMAND1) || input.equalsIgnoreCase(EXIT_COMMAND2)){
                 System.exit(0);
             }else if (input.equalsIgnoreCase(LIST_COMMAND)) {
